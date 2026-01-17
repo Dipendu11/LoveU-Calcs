@@ -20,6 +20,7 @@
 
         * { box-sizing: border-box; }
 
+        /* FIX: Sticky Footer Layout */
         body {
             margin: 0;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -27,17 +28,27 @@
             color: var(--text-main);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            
+            /* The Fix: */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1; /* Pushes footer down */
+            width: 100%;
         }
 
         a { text-decoration: none; color: inherit; }
 
         .container {
-            max-width: 800px; /* Reading width */
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
 
-        /* 2. HEADER (Modern Design) */
+        /* 2. HEADER */
         header {
             padding: 1.2rem 0;
             border-bottom: 1px solid var(--border);
@@ -75,7 +86,7 @@
         /* 4. PAGE HERO */
         .page-hero {
             padding: 1rem 0 2rem 0;
-            border-bottom: 2px solid var(--accent); /* Strong divider */
+            border-bottom: 2px solid var(--accent);
             margin-bottom: 1rem;
         }
 
@@ -86,7 +97,7 @@
             letter-spacing: -1px;
         }
 
-        /* 5. TOOL LIST (The Design You Requested) */
+        /* 5. TOOL LIST */
         .tool-list {
             display: flex;
             flex-direction: column;
@@ -96,7 +107,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 0; /* Generous touch target */
+            padding: 18px 0;
             border-bottom: 1px solid var(--border);
             font-weight: 600;
             font-size: 1.1rem;
@@ -105,15 +116,13 @@
         }
 
         .tool-row:hover {
-            padding-left: 10px; /* Subtle movement on desktop */
+            padding-left: 10px;
             background-color: var(--highlight);
         }
 
-        .tool-row:active { background-color: #eee; }
-
         .arrow { color: #999; font-weight: normal; }
 
-        /* 6. FOOTER (Modern Design) */
+        /* 6. FOOTER */
         footer {
             border-top: 1px solid var(--border);
             padding: 3rem 0;
@@ -121,7 +130,7 @@
             text-align: center;
             color: var(--text-muted);
             font-size: 0.85rem;
-            margin-top: 5rem;
+            margin-top: 5rem; /* Adds breathing room before footer starts */
         }
         
         .footer-links { margin-bottom: 1.5rem; }
