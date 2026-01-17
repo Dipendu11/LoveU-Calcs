@@ -45,6 +45,7 @@
         .icon-btn {
             background: none; border: none; cursor: pointer; padding: 5px;
             display: flex; align-items: center; justify-content: center;
+            width: auto; /* FIX: Explicitly reset width just in case */
         }
         .burger-icon {
             width: 24px; height: 2px; background: var(--accent); position: relative;
@@ -131,15 +132,19 @@
 
         textarea { resize: vertical; min-height: 150px; }
 
-        button {
+        /* FIX: Scoped button style to only affect the form */
+        .contact-form button {
             background-color: #000; color: #fff; border: none;
             padding: 16px 32px; font-size: 1rem; font-weight: 700;
             cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
-            width: 100%; transition: opacity 0.2s;
+            width: 100%; /* Full width on mobile */
+            transition: opacity 0.2s;
         }
-        button:hover { opacity: 0.8; }
+        .contact-form button:hover { opacity: 0.8; }
 
-        @media (min-width: 600px) { button { width: auto; } }
+        @media (min-width: 600px) { 
+            .contact-form button { width: auto; } 
+        }
 
         /* 6. FOOTER */
         footer { border-top: 1px solid var(--border); padding: 3rem 0; background: #f9f9f9; text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 5rem; }
@@ -198,9 +203,7 @@
             
             <input type="text" name="_honey" style="display:none">
             <input type="hidden" name="_captcha" value="false">
-            
             <input type="hidden" name="_next" value="https://loveucalc.com/">
-            
             <input type="hidden" name="_subject" value="New Contact from LoveU Calc">
 
             <div>
