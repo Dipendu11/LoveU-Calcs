@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - CalcsHub</title>
+    <meta name="description" content="CalcsHub is a free, open-source collection of fast online calculators. We prioritize privacy, speed, and mobile usability.">
+    <link rel="canonical" href="https://calcshub.com/about">
+    
+    <style>
+        /* 1. RESET & VARIABLES */
+        :root { --bg:#fff; --text:#111; --muted:#666; --border:#e5e5e5; --accent:#000; --highlight:#f4f4f4; }
+        * { box-sizing: border-box; }
+        
+        /* 2. STICKY FOOTER LAYOUT */
+        body { 
+            margin: 0; 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6; /* Better reading for text blocks */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        main { flex: 1; width: 100%; }
+        
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; } /* Narrower for reading */
 
+        /* 3. HEADER */
+        header { padding: 1.2rem 0; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; color: var(--accent); }
+        .menu-link { font-size: 0.9rem; font-weight: 600; text-decoration: underline; }
+        
+        /* 4. CONTENT STYLES */
+        h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -1px; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; }
+        p { margin-bottom: 1.2rem; color: #333; font-size: 1.05rem; }
+        ul { margin-bottom: 1.5rem; padding-left: 1.2rem; }
+        li { margin-bottom: 0.5rem; color: #333; }
+
+        /* 5. FOOTER */
+        footer { border-top: 1px solid var(--border); padding: 3rem 0; background: #f9f9f9; text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 5rem; }
+        .footer-links { margin-bottom: 1.5rem; }
+        .footer-links a { margin: 0 12px; color: var(--text); font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="/" class="logo">CalcsHub.</a>
+            <a href="#footer" class="menu-link">Menu</a>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <h1>About CalcsHub</h1>
+        <p style="color: #666; font-size: 1.1rem; margin-bottom: 2rem;">Fast. Private. Simple.</p>
+
+        <p>CalcsHub was built to solve a simple problem: most online calculator websites are slow, cluttered with ads, and difficult to use on mobile phones.</p>
+        
+        <p>We believe that when you need to calculate a grade, a mortgage payment, or a unit conversion, you shouldn't have to wait for 5MB of scripts to load. You want the answer, and you want it now.</p>
+
+        <h2>Our Core Principles</h2>
+        <ul>
+            <li><strong>Zero Bloat:</strong> Our pages are usually under 15KB. We use no heavy frameworks or tracking scripts.</li>
+            <li><strong>Privacy First:</strong> Calculations happen on your device (in your browser). We do not send your data to our servers.</li>
+            <li><strong>Mobile First:</strong> Every tool is designed for touchscreens first, ensuring large buttons and readable text on small screens.</li>
+        </ul>
+
+        <h2>Who is this for?</h2>
+        <p>CalcsHub is for students, professionals, and homeowners who value efficiency. Whether you are calculating your CGPA for university applications or estimating concrete for a driveway, our tools are free to use forever.</p>
+
+    </main>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/disclaimer">Disclaimer</a>
+            </div>
+            <p>&copy; 2026 CalcsHub. Use for reference only.</p>
+        </div>
+    </footer>
+</body>
+</html>
