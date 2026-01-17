@@ -61,6 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Conversion Helper ---
+    function toFeet(value, unit) {
+        if (!value) return 0;
+        switch (unit) {
+            case 'ft': return value;
+            case 'm': return value * 3.28084;
+            case 'yd': return value * 3;
+            case 'in': return value / 12;
+            case 'cm': return value / 30.48;
+            default: return value;
+        }
+    }
+
     // --- Calculation Logic ---
     btnCalc.addEventListener('click', () => {
         const L = parseFloat(lengthInput.value);
@@ -72,18 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 1. Normalize Dimensions to Feet
-        let feetL = L;
-        if (lUnit.value === 'm') feetL = L * 3.28084;
-        if (lUnit.value === 'yd') feetL = L * 3;
-
-        let feetW = W;
-        if (wUnit.value === 'm') feetW = W * 3.28084;
-        if (wUnit.value === 'yd') feetW = W * 3;
-
-        let feetD = D;
-        if (dUnit.value === 'in') feetD = D / 12;
-        if (dUnit.value === 'cm') feetD = (D / 30.48);
+        // 1. Normalize All Dimensions to Feet
+        const feetL = toFeet(L, lUnit.value);
+        const feetW = toFeet(W, wUnit.value);
+        const feetD = toFeet(D, dUnit.value);
 
         // 2. Core Math
         const areaSqFt = feetL * feetW;
@@ -105,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (subBaseCheck.checked) {
             const baseD = parseFloat(baseDepthInput.value) || 0;
             const baseDens = parseFloat(baseDensityInput.value) || 110;
+            // Base input is strictly in Inches in HTML, so convert /12
             const baseVol = areaSqFt * (baseD / 12);
-            // Gravel usually doesn't shrink as much, simplified 10% safety
             baseTons = (baseVol * baseDens * 1.10) / 2000;
         }
 
@@ -114,17 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const pricePerTon = parseFloat(priceInput.value) || 0;
         const laborRate = parseFloat(laborInput.value) || 0;
         
-        // Estimate Base Cost at $35/ton if not specified, but we only calculate if user entered asphalt price
-        // To keep it simple, we assume "Asphalt Price" input is strictly for asphalt material
-        // If user wants base cost, they usually bundle it. 
-        // We will calculate Material Cost (Asphalt) + Labor.
-        
         let matCost = finalTons * pricePerTon;
         let laborCost = areaSqFt * laborRate;
         
-        // Add estimated base cost ($30/ton avg) ONLY if price is entered, to make total realistic
         if (baseTons > 0 && pricePerTon > 0) {
-            matCost += (baseTons * 30); 
+            matCost += (baseTons * 30); // Est base cost
         }
 
         const totalCost = matCost + laborCost;
@@ -150,8 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Visual Bar Logic (CSS Width)
             costBarWrapper.style.display = 'block';
             const total = matCost + laborCost;
-            const matPercent = (matCost / total) * 100;
-            const laborPercent = (laborCost / total) * 100;
+            // Prevent divide by zero if user enters 0 price
+            let matPercent = total > 0 ? (matCost / total) * 100 : 0;
+            let laborPercent = total > 0 ? (laborCost / total) * 100 : 0;
+            
+            // Cap at 100% just in case of rounding
+            if(matPercent + laborPercent > 100) laborPercent = 100 - matPercent;
             
             barMaterial.style.width = matPercent + "%";
             barLabor.style.width = laborPercent + "%";
