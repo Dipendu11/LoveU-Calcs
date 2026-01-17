@@ -1,314 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CalcsHub - Professional Online Calculators</title>
-    <meta name="description" content="Fast, accurate, and free online calculators for construction, finance, education, and technology. No ads, no bloat.">
-
-    <style>
-        /* --- 1. CORE VARIABLES (Strict Minimalist Palette) --- */
-        :root {
-            --bg-white: #ffffff;
-            --bg-alt: #f4f6f8;      /* Very subtle grey for contrast sections */
-            --text-primary: #1a1a1a;
-            --text-secondary: #555555;
-            --border-color: #e1e4e8;
-            --accent-color: #000000; /* Strict Black */
-            --link-color: #0052cc;   /* Professional Blue for actions */
-            --container-width: 1100px;
-        }
-
-        /* --- 2. RESET & TYPOGRAPHY --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            background-color: var(--bg-white);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased; /* Crisp text on Mac */
-        }
-
-        a { text-decoration: none; color: inherit; transition: 0.2s; }
-
-        /* --- 3. LAYOUT --- */
-        .container {
-            width: 100%;
-            max-width: var(--container-width);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* --- 4. HEADER --- */
-        .site-header {
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border-color);
-            padding: 20px 0;
-            position: sticky; /* Keeps header visible */
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--accent-color);
-        }
-
-        .logo span { color: var(--text-secondary); font-weight: 400; }
-
-        .nav-links a {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-left: 24px;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover { color: var(--accent-color); }
-
-        /* --- 5. HERO SECTION --- */
-        .hero {
-            padding: 80px 0 60px;
-            text-align: left; /* Corporate standard is often left-aligned */
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            line-height: 1.1;
-            margin-bottom: 16px;
-            letter-spacing: -1.5px;
-            color: var(--text-primary);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 32px;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        /* --- 6. SECTIONS --- */
-        .section-title {
-            margin-bottom: 40px;
-        }
-        
-        .section-title h2 {
-            font-size: 1.75rem;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-        }
-        
-        .section-title p { color: var(--text-secondary); }
-
-        .category-section { padding: 80px 0; }
-        
-        /* Alternating Background for visual separation */
-        .alt-bg { background-color: var(--bg-alt); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-
-        /* --- 7. GRID CARDS (The core "No SVG" design) --- */
-        .tool-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .tool-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            height: 100%;
-        }
-
-        .tool-card:hover {
-            border-color: #b0b8c1;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .tool-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-
-        .tool-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-            flex-grow: 1; /* Pushes the link to the bottom */
-        }
-
-        .link-text {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--link-color);
-            margin-top: auto; /* Ensures alignment at bottom */
-        }
-
-        /* --- 8. FOOTER --- */
-        footer {
-            padding: 60px 0;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .footer-nav { margin-bottom: 20px; }
-        .footer-nav a { margin: 0 12px; color: var(--text-primary); }
-        .footer-nav a:hover { text-decoration: underline; }
-
-        /* Mobile Adjustment */
-        @media (max-width: 768px) {
-            .hero { text-align: center; padding: 60px 0; }
-            .hero p { margin: 0 auto 30px; }
-            .header-inner { flex-direction: column; gap: 15px; }
-            .nav-links a { margin: 0 10px; }
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalcsHub</title>
+<meta name="description" content="Fast, accurate online calculators. Zero ads.">
+<style>
+:root{--p:#0056b3;--t:#111;--m:#555;--b:#fff;--a:#f8f9fa;--d:#ddd;--w:900px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--b);color:var(--t);line-height:1.5;display:flex;flex-direction:column;min-height:100vh}
+a{text-decoration:none;color:inherit;transition:.2s}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 1.25rem;width:100%}
+header{border-bottom:1px solid var(--d);padding:1rem 0}
+.head-in{display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:1.5rem;letter-spacing:-1px}
+.logo span{color:var(--p)}
+nav a{color:var(--m);font-size:.9rem;font-weight:500}
+nav a:hover{color:var(--p)}
+.hero{padding:3rem 0;text-align:center}
+.hero h1{font-size:2.2rem;font-weight:800;letter-spacing:-1px;margin-bottom:.5rem}
+.hero p{color:var(--m);max-width:500px;margin:0 auto}
+.cats{padding:2rem 0;background:var(--a);border-top:1px solid var(--d)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.card{background:var(--b);border:1px solid var(--d);border-radius:6px;padding:1.25rem;display:block}
+.card:hover{border-color:#999}
+.card h3{font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
+.card p{color:var(--m);font-size:.85rem;margin-bottom:.75rem}
+.go{color:var(--p);font-size:.85rem;font-weight:600}
+.txt{padding:2rem 0;border-top:1px solid var(--d)}
+.txt h2{font-size:1.25rem;margin-bottom:.5rem}
+.txt p{color:var(--m);font-size:.9rem;margin-bottom:1rem}
+footer{background:var(--a);border-top:1px solid var(--d);padding:2rem 0;margin-top:auto;text-align:center;font-size:.85rem;color:#999}
+.f-nav{margin-bottom:1rem}
+.f-nav a{margin:0 .5rem;color:var(--m)}
+.f-nav a:hover{color:var(--t);text-decoration:underline}
+@media(max-width:600px){.hero h1{font-size:1.8rem}}
+</style>
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="/" class="logo">CalcsHub<span>.io</span></a>
-            <nav class="nav-links">
-                <a href="#construction">Construction</a>
-                <a href="#finance">Finance</a>
-                <a href="#education">Education</a>
-            </nav>
-        </div>
-    </header>
+<header>
+<div class="wrap head-in">
+<a href="/" class="logo">CalcsHub<span>.</span></a>
+<nav><a href="#about">About</a></nav>
+</div>
+</header>
 
-    <main>
-        
-        <section class="hero">
-            <div class="container">
-                <h1>Precision tools for<br>professionals.</h1>
-                <p>Fast, distraction-free calculators. Designed for zero latency and instant results.</p>
-                <a href="#all-tools" class="btn-primary">Browse Calculators</a>
-            </div>
-        </section>
+<main>
+<section class="hero">
+<div class="wrap">
+<h1>CalcsHub</h1>
+<p>Fast, accurate, distraction-free tools.</p>
+</div>
+</section>
 
-        <section id="construction" class="category-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Construction & Industrial</h2>
-                    <p>Material estimation and volume tools.</p>
-                </div>
-                
-                <div class="tool-grid">
-                    <a href="/asphalt-calculator/" class="tool-card">
-                        <h3>Asphalt Calculator</h3>
-                        <p>Calculate hot mix tonnage required based on area dimensions and density.</p>
-                        <span class="link-text">Open Tool &rarr;</span>
-                    </a>
+<section class="cats">
+<div class="wrap grid">
+<a href="/categories/education-academics.html" class="card">
+<h3>🎓 Education</h3>
+<p>CGPA, Grades, Long Division.</p>
+<span class="go">6 Tools &rarr;</span>
+</a>
+<a href="/categories/salary-finance.html" class="card">
+<h3>💼 Finance</h3>
+<p>Salary Hike, Mortgage, Interest.</p>
+<span class="go">4 Tools &rarr;</span>
+</a>
+<a href="/categories/construction-materials.html" class="card">
+<h3>🏗 Construction</h3>
+<p>Asphalt, Gravel, Board Foot.</p>
+<span class="go">5 Tools &rarr;</span>
+</a>
+<a href="/categories/general-lifestyle.html" class="card">
+<h3>🧠 General</h3>
+<p>Age, Birthday, Stats.</p>
+<span class="go">3 Tools &rarr;</span>
+</a>
+</div>
+</section>
 
-                    <a href="/concrete-calculator/" class="tool-card">
-                        <h3>Concrete Calculator</h3>
-                        <p>Estimate cement bags, slabs, and footings for foundation work.</p>
-                        <span class="link-text">Open Tool &rarr;</span>
-                    </a>
+<article id="about" class="txt">
+<div class="wrap">
+<h2>Why Speed Matters</h2>
+<p>CalcsHub is built on a zero-dependency architecture. Whether on 3G or desktop, our tools load instantly.</p>
+<h2>Methodology</h2>
+<p>We use native browser calculations and no external frameworks to ensure immediate results.</p>
+</div>
+</article>
+</main>
 
-                    <a href="/brick-calculator/" class="tool-card">
-                        <h3>Brick & Mortar</h3>
-                        <p>Determine brick counts for walls with standard mortar gaps.</p>
-                        <span class="link-text">Open Tool &rarr;</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="education" class="category-section alt-bg">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Education & Math</h2>
-                    <p>Academic tools for students and teachers.</p>
-                </div>
-                
-                <div class="tool-grid">
-                    <a href="/long-division-calculator/" class="tool-card">
-                        <h3>Long Division</h3>
-                        <p>Step-by-step division calculator with remainders and decimals.</p>
-                        <span class="link-text">Calculate &rarr;</span>
-                    </a>
-
-                    <a href="/gpa-calculator/" class="tool-card">
-                        <h3>GPA Calculator</h3>
-                        <p>Calculate high school or college GPA based on credit hours.</p>
-                        <span class="link-text">Calculate &rarr;</span>
-                    </a>
-
-                    <a href="/percentage-calculator/" class="tool-card">
-                        <h3>Percentage Tool</h3>
-                        <p>Find percentage change, difference, and parts of a whole.</p>
-                        <span class="link-text">Calculate &rarr;</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="finance" class="category-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Finance & Business</h2>
-                    <p>Interest, loans, and tax estimations.</p>
-                </div>
-                
-                <div class="tool-grid">
-                    <a href="/loan-calculator/" class="tool-card">
-                        <h3>Loan Amortization</h3>
-                        <p>Calculate monthly payments and total interest over time.</p>
-                        <span class="link-text">View Schedule &rarr;</span>
-                    </a>
-
-                    <a href="/roi-calculator/" class="tool-card">
-                        <h3>ROI Calculator</h3>
-                        <p>Measure the return on investment percentage for business projects.</p>
-                        <span class="link-text">Calculate ROI &rarr;</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-nav">
-                <a href="/about.html">About</a>
-                <a href="/contact.html">Contact</a>
-                <a href="/privacy.html">Privacy</a>
-                <a href="/sitemap.xml">Sitemap</a>
-            </div>
-            <p>&copy; 2026 CalcsHub. Minimalist Utility Network.</p>
-        </div>
-    </footer>
+<footer>
+<div class="wrap">
+<nav class="f-nav">
+<a href="/about.html">About</a>
+<a href="/contact.html">Contact</a>
+<a href="/privacy.html">Privacy</a>
+<a href="/disclaimer.html">Disclaimer</a>
+</nav>
+<p>&copy; 2024 CalcsHub.</p>
+</div>
+</footer>
 
 </body>
 </html>
