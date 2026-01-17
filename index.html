@@ -3,288 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CalcsHub</title>
-    <meta name="description" content="Fast, accurate online calculators. Zero ads, zero clutter.">
+    <title>CalcsHub - Free Online Tools</title>
+    <meta name="description" content="Fast, free, and mobile-friendly calculators. Organized by category.">
+    <link rel="canonical" href="https://calcshub.com/">
     
     <style>
-        /* --- VARIABLES --- */
+        /* 1. RESET & VARIABLES */
         :root {
-            --primary: #0056b3;     /* Main blue */
-            --text-main: #111111;   /* Black text */
-            --text-muted: #444444;  /* Dark gray (WCAG compliant) */
-            --bg-body: #ffffff;     /* White background */
-            --bg-alt: #f8f9fa;      /* Light gray background */
-            --border: #dddddd;      /* Border color */
-            --width: 900px;         /* Container max-width */
+            --bg: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border: #e5e5e5;
+            --accent: #000000;
+            --shadow: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-hover: 0 8px 16px rgba(0,0,0,0.08);
         }
 
-        /* --- RESET & PERFORMANCE DEFAULTS --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            /* Prioritize speed over fancy font rendering */
-            text-rendering: optimizeSpeed;
-        }
+        * { box-sizing: border-box; }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-body);
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
             color: var(--text-main);
             line-height: 1.5;
-            /* Note: We removed 'display: flex' on body to allow faster progressive rendering */
+            -webkit-font-smoothing: antialiased;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        a { text-decoration: none; color: inherit; }
 
-        /* --- LAYOUT UTILITY --- */
-        .wrap {
-            max-width: var(--width);
+        .container {
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 1.25rem;
-            width: 100%;
+            padding: 0 1.5rem;
         }
 
-        /* --- HEADER --- */
+        /* 2. HEADER */
         header {
+            padding: 1.2rem 0;
             border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-            background-color: var(--bg-body);
+            background: #fff;
         }
 
-        .head-in {
+        .header-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
+            font-size: 1.5rem; /* Standard size */
             font-weight: 800;
-            font-size: 1.5rem;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
+            color: var(--accent);
         }
 
-        .logo span {
-            color: var(--primary);
-        }
-
-        nav a {
-            color: var(--text-muted);
+        .menu-link {
             font-size: 0.9rem;
             font-weight: 600;
-        }
-
-        nav a:hover {
-            color: var(--primary);
             text-decoration: underline;
         }
 
-        /* --- HERO SECTION --- */
+        /* 3. HERO SECTION (Adjusted Size) */
         .hero {
-            padding: 3rem 0;
+            padding: 3.5rem 0 2.5rem 0;
             text-align: center;
-            /* Performance: 'contain' tells browser this area doesn't affect outside layout */
-            contain: content; 
-        }
-
-        .hero h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        /* --- CATEGORIES SECTION --- */
-        .cats {
-            padding: 2rem 0;
-            background-color: var(--bg-alt);
-            border-top: 1px solid var(--border);
-            /* Performance: 'auto' skips rendering this section if it's off-screen */
-            content-visibility: auto; 
+        .hero h1 {
+            font-size: 1.75rem; /* Reduced from 2.5rem */
+            font-weight: 800;
+            margin: 0 0 0.8rem 0;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
         }
 
-        .grid {
+        .hero p {
+            font-size: 1rem; /* Reduced slightly */
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* 4. CATEGORY GRID */
+        .category-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 5rem;
         }
 
-        /* --- CATEGORY CARDS --- */
-        .card {
-            display: block;
-            background-color: var(--bg-body);
+        .cat-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.25rem;
-            /* Performance: Optimizes painting of individual cards */
-            contain: paint; 
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            height: 100%;
         }
 
-        .card:hover {
-            border-color: #777;
+        .cat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            border-color: #ccc;
         }
 
-        .card h2 {
-            font-size: 1.15rem;
+        /* SEO: This is h2, so h1 remains unique to Hero */
+        .cat-title {
+            font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 0.25rem;
+            margin: 0 0 0.5rem 0;
             color: var(--text-main);
         }
 
-        .card p {
-            color: var(--text-muted);
+        .cat-desc {
             font-size: 0.9rem;
-            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
         }
 
-        .go {
-            color: var(--primary);
+        .cat-link-text {
+            font-weight: 600;
             font-size: 0.85rem;
-            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* --- TEXT CONTENT SECTION --- */
-        .txt {
-            padding: 2rem 0;
-            border-top: 1px solid var(--border);
-            content-visibility: auto;
-        }
-
-        .txt h2 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .txt p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-
-        /* --- FOOTER --- */
+        /* 5. FOOTER */
         footer {
-            background-color: var(--bg-alt);
             border-top: 1px solid var(--border);
-            padding: 2rem 0;
+            padding: 3rem 0;
+            background: #f9f9f9;
             text-align: center;
-            font-size: 0.9rem;
             color: var(--text-muted);
-            content-visibility: auto;
+            font-size: 0.85rem;
         }
-
-        .f-nav {
-            margin-bottom: 1rem;
-        }
-
-        .f-nav a {
-            margin: 0 0.6rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .f-nav a:hover {
-            color: var(--text-main);
-            text-decoration: underline;
-        }
-
-        /* --- MOBILE OPTIMIZATION --- */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            /* Switch to block layout on mobile for faster rendering than grid */
-            .grid {
-                display: block;
-            }
-
-            .card {
-                margin-bottom: 1rem;
-            }
-        }
+        
+        .footer-links { margin-bottom: 1.5rem; }
+        .footer-links a { margin: 0 12px; color: var(--text-main); font-weight: 500; }
+        .footer-links a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="wrap head-in">
-            <a href="/" class="logo">CalcsHub<span>.</span></a>
-            <nav>
-                <a href="#about">About</a>
-            </nav>
+        <div class="container header-inner">
+            <a href="/" class="logo">CalcsHub.</a>
+            <a href="#footer" class="menu-link">Menu</a>
         </div>
     </header>
 
-    <main>
+    <main class="container">
+        
         <section class="hero">
-            <div class="wrap">
-                <h1>CalcsHub</h1>
-                <p>Fast, accurate, distraction-free tools.</p>
-            </div>
+            <h1>CalcsHub Tools</h1>
+            <p>Select a category to find the right calculator.</p>
         </section>
 
-        <section class="cats">
-            <div class="wrap grid">
-                
-                <a href="/categories/education-academics.html" class="card">
-                    <h2>🎓 Education</h2>
-                    <p>CGPA, Grades, Long Division.</p>
-                    <span class="go">6 Tools &rarr;</span>
-                </a>
+        <div class="category-grid">
 
-                <a href="/categories/salary-finance.html" class="card">
-                    <h2>💼 Finance</h2>
-                    <p>Salary Hike, Mortgage, Interest.</p>
-                    <span class="go">4 Tools &rarr;</span>
-                </a>
+            <a href="/categories/education-academics.html" class="cat-card">
+                <h2 class="cat-title">Education</h2>
+                <div class="cat-desc">CGPA, SGPA, percentage converters, and grade calculators.</div>
+                <div class="cat-link-text">Open Category →</div>
+            </a>
 
-                <a href="/categories/construction-materials.html" class="card">
-                    <h2>🏗 Construction</h2>
-                    <p>Asphalt, Gravel, Board Foot.</p>
-                    <span class="go">5 Tools &rarr;</span>
-                </a>
+            <a href="/categories/finance.html" class="cat-card">
+                <h2 class="cat-title">Finance</h2>
+                <div class="cat-desc">Salary hikes, mortgage payoffs, and interest calculators.</div>
+                <div class="cat-link-text">Open Category →</div>
+            </a>
 
-                <a href="/categories/general-lifestyle.html" class="card">
-                    <h2>🧠 General</h2>
-                    <p>Age, Birthday, Stats.</p>
-                    <span class="go">3 Tools &rarr;</span>
-                </a>
+            <a href="/categories/construction-materials.html" class="cat-card">
+                <h2 class="cat-title">Construction</h2>
+                <div class="cat-desc">Calculate concrete, asphalt, gravel, and lumber needs.</div>
+                <div class="cat-link-text">Open Category →</div>
+            </a>
 
-            </div>
-        </section>
+            <a href="/categories/general.html" class="cat-card">
+                <h2 class="cat-title">Lifestyle</h2>
+                <div class="cat-desc">Age calculation, sports stats, and daily utilities.</div>
+                <div class="cat-link-text">Open Category →</div>
+            </a>
 
-        <article id="about" class="txt">
-            <div class="wrap">
-                <h2>Why Speed Matters</h2>
-                <p>CalcsHub is built on a zero-dependency architecture. Whether on 3G or desktop, our tools load instantly.</p>
-                
-                <h2>Methodology</h2>
-                <p>We use native browser calculations and no external frameworks to ensure immediate results.</p>
-            </div>
-        </article>
+        </div>
+
     </main>
 
-    <footer>
-        <div class="wrap">
-            <nav class="f-nav">
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-links">
                 <a href="/about.html">About</a>
                 <a href="/contact.html">Contact</a>
                 <a href="/privacy.html">Privacy</a>
                 <a href="/disclaimer.html">Disclaimer</a>
-            </nav>
-            <p>&copy; 2024 CalcsHub.</p>
+            </div>
+            <p>&copy; 2026 CalcsHub. Use for reference only.</p>
         </div>
     </footer>
 
