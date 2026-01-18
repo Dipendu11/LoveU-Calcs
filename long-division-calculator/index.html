@@ -7,8 +7,6 @@
     <meta name="description" content="Solve long division problems instantly. Shows complete step-by-step work, quotient, remainder, and supports multiple notation styles.">
     <link rel="canonical" href="https://loveucalc.com/long-division-calculator/">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
     <style>
         /* 1. LOVEU DESIGN VARIABLES */
         :root {
@@ -32,7 +30,7 @@
             --color-divisor: #0d9488;
             --color-quotient: #7c3aed;
             --color-sub: #dc2626;
-            --bg-dyscalculia: #FFFDD0; /* Cream background for Access Mode */
+            --bg-dyscalculia: #FFFDD0;
         }
 
         /* 2. RESET & BASE */
@@ -54,7 +52,8 @@
             outline: 2px solid var(--calc-blue); outline-offset: 2px;
         }
         
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
+        /* FIX: Reverted to 800px to match Homepage perfectly */
+        .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
         @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
 
         /* 3. HEADER */
@@ -74,10 +73,7 @@
         .logo-love { color: var(--love-pink); } .logo-calc { color: var(--calc-blue); }
         .logo-u-svg { width: 22px; height: 22px; display: block; margin-left: 4px; margin-right: 2px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
 
-        /* 4. CONTENT LIMITER */
-        .content-limiter { max-width: 800px; margin: 0 auto; }
-
-        /* 5. CALCULATOR CARD */
+        /* 4. CALCULATOR CARD */
         .calculator-card {
             background: var(--surface); padding: 2rem;
             border-radius: var(--radius-lg); border: 1px solid var(--border);
@@ -106,7 +102,7 @@
             background: #fff; appearance: none; min-height: 48px;
         }
 
-        /* 6. OPTIONS BAR */
+        /* 5. OPTIONS BAR */
         .options-bar {
             background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-md);
             border: 1px solid var(--border); margin-bottom: 1.5rem;
@@ -118,7 +114,7 @@
         .toggle-label { display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--text-main); }
         .toggle-label input { width: 18px; height: 18px; accent-color: var(--calc-blue); cursor: pointer; }
 
-        /* 7. BUTTONS */
+        /* 6. BUTTONS */
         .btn-calc { 
             width: 100%; background: var(--gradient-brand); color: #fff; border: none; 
             padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: var(--radius-md); 
@@ -141,7 +137,7 @@
         }
         .btn-reset:hover { border-color: #ef4444; color: #ef4444; }
 
-        /* 8. SOLVER CONTAINER & GRAPH FIX */
+        /* 7. SOLVER AREA */
         .solver-container {
             display: none; 
             margin-top: 2rem;
@@ -149,7 +145,6 @@
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Wrapper for the numbers (Result Box) */
         .math-board-wrapper {
             background: #fff; 
             padding: 2rem; 
@@ -157,12 +152,12 @@
             border: 1px solid var(--border);
             overflow-x: auto; 
             text-align: left;
-            position: relative; /* Crucial for confining the overlay */
+            position: relative;
             min-height: 150px;
             display: flex; justify-content: center;
         }
 
-        /* The Grid Overlay - Positioned Absolute INSIDE .math-board-wrapper */
+        /* Grid Overlay (Inside Wrapper) */
         .grid-overlay {
             display: none; 
             position: absolute; 
@@ -170,14 +165,13 @@
             width: 100%; height: 100%; 
             pointer-events: none; 
             opacity: 0.15; 
-            z-index: 1; /* Sits behind text, above background */
+            z-index: 1;
             background-image: 
                 linear-gradient(#000 1px, transparent 1px), 
                 linear-gradient(90deg, #000 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
-        /* Access Mode Styling */
         .solver-container.dyscalculia-active .math-board-wrapper {
             background-color: var(--bg-dyscalculia) !important;
             border: 2px solid #4f46e5;
@@ -185,12 +179,10 @@
         .solver-container.dyscalculia-active .math-display-pre {
             font-size: 1.6rem; letter-spacing: 4px; color: #000 !important;
         }
-        /* Show the grid ONLY when active */
         .solver-container.dyscalculia-active .grid-overlay { 
             display: block; 
         }
 
-        /* Math Text */
         .math-display-pre {
             font-family: 'Courier New', Courier, monospace; 
             font-size: 1.4rem; 
@@ -199,8 +191,7 @@
             color: var(--text-main);
             font-weight: 700;
             letter-spacing: 2px;
-            z-index: 2; /* Sits on top of grid */
-            position: relative;
+            z-index: 2; position: relative;
         }
 
         /* Highlights */
@@ -208,7 +199,7 @@
         .hl-quotient { color: var(--color-quotient); }
         .hl-sub { color: var(--color-sub); }
 
-        /* Explainer & Nav */
+        /* Explainer */
         .step-explanation-box {
             background: #eff6ff; border-left: 4px solid var(--calc-blue);
             padding: 1rem; margin-top: 1.5rem; border-radius: 8px;
@@ -270,100 +261,98 @@
     </header>
 
     <main class="container">
-        <div class="content-limiter">
-            <nav class="breadcrumbs">
-                <a href="/">Home</a> <span>/</span> <a href="/categories/education-academics">Education</a>
-            </nav>
+        
+        <nav class="breadcrumbs">
+            <a href="/">Home</a> <span>/</span> <a href="/categories/education-academics">Education</a>
+        </nav>
 
-            <div style="margin-bottom: 2rem;">
-                <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text-main);">Long Division Calculator</h1>
-                <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals.</p>
-            </div>
-
-            <div class="calculator-card">
-                <form id="calcForm" onsubmit="event.preventDefault(); startSolver();">
-                    
-                    <div class="input-grid">
-                        <div>
-                            <label for="dividend">Dividend</label>
-                            <div class="input-group">
-                                <input type="number" id="dividend" placeholder="e.g. 1250" required min="0" step="any">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="divisor">Divisor</label>
-                            <div class="input-group">
-                                <input type="number" id="divisor" placeholder="e.g. 5" required min="0" step="any">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="options-bar">
-                        <div class="toggle-group">
-                            <label class="toggle-label">
-                                <input type="radio" name="mode" value="remainder" checked> Remainder
-                            </label>
-                            <label class="toggle-label">
-                                <input type="radio" name="mode" value="decimal"> Decimal
-                            </label>
-                        </div>
-                        
-                        <div class="toggle-group">
-                            <label style="width:100%">
-                                <span style="display:block; margin-bottom:5px; font-weight:700; font-size:0.9rem;">Notation Style</span>
-                                <select id="notationSelect" class="full-select" onchange="if(steps.length>0) renderStep(currentStepIndex);">
-                                    <option value="us">US/UK (Bracket)</option>
-                                    <option value="eu">Europe (Galley)</option>
-                                    <option value="ger">Germany (Colon)</option>
-                                </select>
-                            </label>
-                        </div>
-
-                        <div class="toggle-group">
-                            <label class="toggle-label" title="High contrast, readable font, grid lines">
-                                <input type="checkbox" id="dyscalculiaToggle" onchange="toggleDyscalculia()"> 
-                                <span>Access Mode (Dyscalculia)</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-calc">Solve Step-by-Step</button>
-                    
-                    <div class="btn-secondary-grid">
-                        <button type="button" class="btn-worksheet" onclick="generatePDF()">PDF Worksheet</button>
-                        <button type="button" class="btn-reset" onclick="resetTool()">Reset</button>
-                    </div>
-
-                </form>
-
-                <div id="solverArea" class="solver-container">
-                    
-                    <div class="math-board-wrapper">
-                        <div class="grid-overlay"></div>
-                        <div id="mathBoard" class="math-display-pre"></div>
-                    </div>
-
-                    <div class="step-explanation-box">
-                        <span id="explanationText">Click "Next" to start.</span>
-                    </div>
-
-                    <div class="nav-controls">
-                        <button class="btn-nav" id="btnPrev" onclick="prevStep()" disabled>Prev</button>
-                        <button class="btn-nav primary" id="btnPlay" onclick="toggleAutoPlay()">Auto</button>
-                        <button class="btn-nav" id="btnNext" onclick="nextStep()">Next</button>
-                    </div>
-                </div>
-
-                <div class="tool-signature">
-                    Made with <span class="sig-love">Love</span> & <span class="sig-logic">Logic</span>.
-                </div>
-            </div>
-
-            <article class="content-area">
-                <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Mastering Long Division</h2>
-                <p style="color: var(--text-main);">Long division is the process of breaking a complex division problem into smaller, manageable steps: Divide, Multiply, Subtract, and Bring Down.</p>
-            </article>
+        <div style="margin-bottom: 2rem;">
+            <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text-main);">Long Division Calculator</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">Visual solver for long division with remainders or decimals.</p>
         </div>
+
+        <div class="calculator-card">
+            <form id="calcForm" onsubmit="event.preventDefault(); startSolver();">
+                
+                <div class="input-grid">
+                    <div>
+                        <label for="dividend">Dividend</label>
+                        <div class="input-group">
+                            <input type="number" id="dividend" placeholder="e.g. 1250" required min="0" step="any">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="divisor">Divisor</label>
+                        <div class="input-group">
+                            <input type="number" id="divisor" placeholder="e.g. 5" required min="0" step="any">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="options-bar">
+                    <div class="toggle-group">
+                        <label class="toggle-label">
+                            <input type="radio" name="mode" value="remainder" checked> Remainder
+                        </label>
+                        <label class="toggle-label">
+                            <input type="radio" name="mode" value="decimal"> Decimal
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <label style="width:100%">
+                            <span style="display:block; margin-bottom:5px; font-weight:700; font-size:0.9rem;">Notation Style</span>
+                            <select id="notationSelect" class="full-select" onchange="if(steps.length>0) renderStep(currentStepIndex);">
+                                <option value="us">US/UK (Bracket)</option>
+                                <option value="eu">Europe (Galley)</option>
+                                <option value="ger">Germany (Colon)</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <label class="toggle-label" title="High contrast, readable font, grid lines">
+                            <input type="checkbox" id="dyscalculiaToggle" onchange="toggleDyscalculia()"> 
+                            <span>Access Mode (Dyscalculia)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-calc">Solve Step-by-Step</button>
+                
+                <div class="btn-secondary-grid">
+                    <button type="button" class="btn-worksheet" onclick="generatePDF()">PDF Worksheet</button>
+                    <button type="button" class="btn-reset" onclick="resetTool()">Reset</button>
+                </div>
+
+            </form>
+
+            <div id="solverArea" class="solver-container">
+                <div class="math-board-wrapper">
+                    <div class="grid-overlay"></div>
+                    <div id="mathBoard" class="math-display-pre"></div>
+                </div>
+
+                <div class="step-explanation-box">
+                    <span id="explanationText">Click "Next" to start.</span>
+                </div>
+
+                <div class="nav-controls">
+                    <button class="btn-nav" id="btnPrev" onclick="prevStep()" disabled>Prev</button>
+                    <button class="btn-nav primary" id="btnPlay" onclick="toggleAutoPlay()">Auto</button>
+                    <button class="btn-nav" id="btnNext" onclick="nextStep()">Next</button>
+                </div>
+            </div>
+
+            <div class="tool-signature">
+                Made with <span class="sig-love">Love</span> & <span class="sig-logic">Logic</span>.
+            </div>
+        </div>
+
+        <article class="content-area">
+            <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main);">Mastering Long Division</h2>
+            <p style="color: var(--text-main);">Long division is the process of breaking a complex division problem into smaller, manageable steps: Divide, Multiply, Subtract, and Bring Down.</p>
+        </article>
     </main>
 
     <footer id="footer">
@@ -379,7 +368,6 @@
     </footer>
 
     <script src="/scripts.js" defer></script>
-    
     <script src="./tool.js" defer></script>
 
 </body>
