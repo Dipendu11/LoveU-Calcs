@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Long Division Calculator - Step-by-Step | LoveU Calc</title>
-    <meta name="description" content="Solve long division problems instantly. Shows complete step-by-step work, quotient, remainder, and supports multiple notation styles.">
+    
+    <title>Long Division Calculator with Steps & Remainders | Free Worksheet Generator</title>
+    <meta name="description" content="Solve long division problems instantly. Shows the complete step-by-step work (Divide, Multiply, Subtract, Bring Down). Features printable PDF worksheets and Dyscalculia mode.">
+    
     <link rel="canonical" href="https://loveucalc.com/long-division-calculator/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Long Division Calculator (Step-by-Step Solver)">
+    <meta property="og:description" content="Stuck on math? This tool shows you the work, not just the answer. Great for checking homework or creating practice sheets.">
+    <meta property="og:url" content="https://loveucalc.com/long-division-calculator/">
+    <meta property="og:image" content="https://loveucalc.com/assets/long-division-preview.jpg"> <meta property="og:site_name" content="LoveU Calc">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Long Division Calculator with Steps">
+    <meta name="twitter:description" content="Visualize long division instantly. Supports remainders, decimals, and printable worksheets.">
+
+    <meta name="theme-color" content="#2563eb">
     
     <style>
         /* 1. LOVEU DESIGN VARIABLES */
@@ -260,6 +274,84 @@
         .footer-links a { margin: 0 15px; font-weight: 600; color: var(--text-main); }
 
     </style>
+
+    <script type="application/ld+json">
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "LoveU Calc Long Division Solver",
+            "url": "https://loveucalc.com/long-division-calculator/",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "featureList": "Step-by-step visualization, PDF Worksheet Generator, Dyscalculia Access Mode, Remainder/Decimal Toggle",
+            "author": {
+                "@type": "Organization",
+                "name": "LoveU Calc"
+            }
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "How to Do Long Division (US Method)",
+            "description": "Follow the standard 'Does McDonald's Sell Burgers' method to solve any division problem.",
+            "step": [
+                {
+                    "@type": "HowToStep",
+                    "name": "Divide",
+                    "text": "Determine how many times the divisor fits into the first digit of the dividend.",
+                    "position": 1
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "Multiply",
+                    "text": "Multiply that number by the divisor and write the result underneath the dividend.",
+                    "position": 2
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "Subtract",
+                    "text": "Subtract the result from the digit above to find the remainder.",
+                    "position": 3
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "Bring Down",
+                    "text": "Bring down the next digit from the dividend to continue the cycle.",
+                    "position": 4
+                }
+            ]
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What do I do if the remainder is not zero?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "You can write it as 'R' (e.g., 5 R1) for school homework, or toggle the 'Decimal' mode in our tool to continue dividing until you get a precise decimal answer."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I print a worksheet from this tool?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Click the 'PDF Worksheet' button to generate a free, printable practice sheet based on the current problem."
+                    }
+                }
+            ]
+        }
+    ]
+    </script>
+
 </head>
 <body>
 
@@ -575,11 +667,17 @@
                 d1.value = div;
                 d2.value = divr;
             }
+            
             window.scrollTo({top: 150, behavior: 'smooth'});
+            
             setTimeout(() => {
-                const btn = document.querySelector('.btn-calc');
-                if(btn) btn.click();
-            }, 400);
+                if (typeof startSolver === 'function') {
+                    startSolver();
+                } else {
+                    const btn = document.querySelector('.btn-calc');
+                    if(btn) btn.click();
+                }
+            }, 500);
         }
     </script>
 
