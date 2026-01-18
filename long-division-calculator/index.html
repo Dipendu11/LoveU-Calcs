@@ -13,7 +13,8 @@
     <meta property="og:title" content="Long Division Calculator (Step-by-Step Solver)">
     <meta property="og:description" content="Stuck on math? This tool shows you the work, not just the answer. Great for checking homework or creating practice sheets.">
     <meta property="og:url" content="https://loveucalc.com/long-division-calculator/">
-    <meta property="og:image" content="https://loveucalc.com/assets/long-division-preview.jpg"> <meta property="og:site_name" content="LoveU Calc">
+    <meta property="og:image" content="https://loveucalc.com/assets/long-division-preview.jpg"> 
+    <meta property="og:site_name" content="LoveU Calc">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Long Division Calculator with Steps">
@@ -270,6 +271,22 @@
         .nav-links a { display: block; padding: 15px 0; font-size: 1.1rem; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border); }
         .search-input { width: 100%; padding: 12px 0; font-size: 1.2rem; border: none; border-bottom: 2px solid var(--border); outline: none; color: var(--text-main); }
         .search-results-container { max-width: 1000px; margin: 0 auto; padding: 1rem 1.5rem; background: var(--surface); }
+        
+        /* --- SPEED INDEX OPTIMIZATIONS --- */
+        
+        /* A. Defer rendering of the heavy text content until scroll */
+        .content-area, footer {
+            content-visibility: auto;
+            contain-intrinsic-size: 1000px; /* Estimates height to prevent scrollbar jumping */
+        }
+        
+        /* B. Speed up table rendering */
+        table {
+            width: 100%; 
+            border-collapse: collapse; 
+            table-layout: fixed; /* Crucial for rendering speed */
+        }
+        
         footer { border-top: 1px solid var(--border); padding: 4rem 0; background: var(--surface); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: auto; }
         .footer-links a { margin: 0 15px; font-weight: 600; color: var(--text-main); }
 
@@ -351,7 +368,6 @@
         }
     ]
     </script>
-
 </head>
 <body>
 
@@ -446,7 +462,7 @@
                         <div class="toggle-group">
                             <label style="width:100%">
                                 <span style="display:block; margin-bottom:5px; font-weight:700; font-size:0.9rem;">Notation Style</span>
-                                <select id="notationSelect" class="full-select" onchange="if(steps.length>0) renderStep(currentStepIndex);">
+                                <select id="notationSelect" class="full-select" onchange="if(typeof steps !== 'undefined' && steps.length>0) renderStep(currentStepIndex);">
                                     <option value="us">US/UK (Bracket)</option>
                                     <option value="eu">Europe (Galley)</option>
                                     <option value="ger">Germany (Colon)</option>
@@ -668,12 +684,16 @@
                 d2.value = divr;
             }
             
+            // Scroll safely
             window.scrollTo({top: 150, behavior: 'smooth'});
             
+            // Wait for scroll to complete before triggering logic
             setTimeout(() => {
                 if (typeof startSolver === 'function') {
+                    // Best Practice: Call the function directly
                     startSolver();
                 } else {
+                    // Fallback: Click the button
                     const btn = document.querySelector('.btn-calc');
                     if(btn) btn.click();
                 }
@@ -681,7 +701,7 @@
         }
     </script>
 
-</article>
+            </article>
 
         </div>
     </main>
