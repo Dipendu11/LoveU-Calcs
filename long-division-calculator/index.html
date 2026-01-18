@@ -168,18 +168,18 @@
         /* Dyscalculia Mode: GRID ON BACKGROUND */
         /* We removed the overlay div. Now we apply grid to the box itself. */
         .solver.dys-mode .board-wrap { 
-            background-color: var(--bg-dys) !important; 
-            border: 2px solid var(--bl); 
-            
-            /* The Grid Pattern */
-            background-image: 
-                linear-gradient(#000 1px, transparent 1px), 
-                linear-gradient(90deg, #000 1px, transparent 1px);
-            background-size: 20px 20px;
-            
-            /* Critical: Makes grid scroll with the numbers */
-            background-attachment: local; 
-        }
+    background-color: var(--bg-dys) !important; 
+    border: 2px solid var(--bl); 
+    
+    /* The Grid Pattern */
+    background-image: 
+        /* CHANGE #000 TO rgba(0, 0, 0, 0.15) BELOW */
+        linear-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+        
+    background-size: 20px 20px;
+    background-attachment: local; 
+}
         
         .solver.dys-mode .math-pre { 
             font-size: 1.6rem; 
