@@ -4,228 +4,203 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoveU Calc - Free Online Tools & Calculators</title>
-    <meta name="description" content="Fast, free, and mobile-friendly calculators. Organized by category. No ads, no lag.">
+    <meta name="description" content="Fast, free, and mobile-friendly calculators for Finance, Education, Construction, and Lifestyle. No ads, no lag.">
     <link rel="canonical" href="https://loveucalc.com/">
     
     <style>
-        /* 1. RESET & VARIABLES */
+        /* 1. MODERN APP VARIABLES */
         :root {
-            --bg: #ffffff;
-            --text-main: #111111;
-            --text-muted: #666666;
-            --border: #e5e5e5;
-            --accent: #000000;
-            --shadow: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-hover: 0 8px 16px rgba(0,0,0,0.08);
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            
+            --love-pink: #db2777;
+            --calc-blue: #2563eb;
+            --gradient-brand: linear-gradient(135deg, #db2777 0%, #2563eb 100%);
+            
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-float: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.025);
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* 2. RESET & BASE */
         * { box-sizing: border-box; }
-
-        /* FIX: Sticky Footer Layout */
-        body {
-            margin: 0;
+        
+        body { 
+            margin: 0; 
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text-main);
-            line-height: 1.5;
+            background: var(--bg-body); 
+            color: var(--text-main); 
+            line-height: 1.6;
+            display: flex; flex-direction: column; min-height: 100vh;
             -webkit-font-smoothing: antialiased;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; 
         }
 
-        main {
-            flex: 1;
-            width: 100%;
+        main { flex: 1; width: 100%; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
+        @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
+
+        /* 3. HEADER */
+        header { 
+            padding: 1rem 0; 
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        a { text-decoration: none; color: inherit; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .header-left { display: flex; align-items: center; gap: 1.2rem; }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        @media (max-width: 480px) { .container { padding: 0 1rem; } }
-
-        /* 2. HEADER DESIGN (Updated) */
-        header {
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border);
-            background: #fff;
-            position: relative; z-index: 10;
-        }
-
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-left { display: flex; align-items: center; gap: 1rem; }
-
-        /* Hamburger Button */
         .icon-btn {
-            background: none; border: none; cursor: pointer; padding: 5px;
+            background: transparent; border: none; cursor: pointer; padding: 8px;
             display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; width: 44px; height: 44px;
+            transition: var(--transition);
         }
-        .burger-icon {
-            width: 24px; height: 2px; background: var(--accent); position: relative;
-        }
+        .icon-btn:hover { background: rgba(0,0,0,0.04); }
+
+        .burger-icon { width: 22px; height: 2.5px; background: var(--text-main); position: relative; border-radius: 2px; }
         .burger-icon::before, .burger-icon::after {
             content: ''; position: absolute; left: 0;
-            width: 24px; height: 2px; background: var(--accent);
+            width: 22px; height: 2.5px; background: var(--text-main); border-radius: 2px;
         }
         .burger-icon::before { top: -7px; }
         .burger-icon::after { top: 7px; }
 
-        /* Search Icon (SVG) */
-        .search-icon svg { width: 24px; height: 24px; fill: none; stroke: var(--accent); stroke-width: 2; }
+        .search-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--text-main); stroke-width: 2.5; stroke-linecap: round; }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--accent);
-        }
-
-        /* 3. OVERLAYS (Menu & Search) */
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 100;
-            opacity: 0; visibility: hidden; transition: opacity 0.2s;
-        }
-        .overlay.active { opacity: 1; visibility: visible; }
-
-        /* Menu Drawer */
-        .menu-drawer {
-            position: fixed; top: 0; left: 0; bottom: 0;
-            width: 280px; background: #fff; z-index: 101;
-            transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 2rem; border-right: 1px solid var(--border);
-            display: flex; flex-direction: column;
-        }
-        .overlay.active .menu-drawer { transform: translateX(0); }
-
-        .drawer-header { display: flex; justify-content: space-between; margin-bottom: 2rem; }
-        .close-btn { font-size: 1.5rem; background: none; border: none; cursor: pointer; }
-        
-        .nav-links a { 
-            display: block; padding: 12px 0; font-size: 1.1rem; 
-            font-weight: 600; border-bottom: 1px solid var(--border); 
-        }
-
-        /* Search Bar Overlay */
-        .search-bar-container {
-            position: fixed; top: 0; left: 0; width: 100%; 
-            background: #fff; z-index: 101; padding: 1.5rem;
-            transform: translateY(-100%); transition: transform 0.3s;
-            border-bottom: 1px solid var(--border);
-            display: flex; gap: 1rem; align-items: center;
-        }
-        .overlay.active .search-bar-container { transform: translateY(0); }
-
-        .search-input {
-            width: 100%; padding: 12px; font-size: 1.1rem; border: none;
-            border-bottom: 2px solid var(--accent); outline: none;
-        }
-
-        /* Search Results Styling */
-        .search-results-container {
-            max-width: 800px; margin: 0 auto; padding: 1rem 1.5rem; background: #fff;
-        }
-        .search-result-item {
-            display: block; padding: 15px 0; border-bottom: 1px solid #eee;
-            font-size: 1.1rem; font-weight: 600; color: #000;
-        }
-        .search-result-item:hover { background-color: #f9f9f9; padding-left: 10px; transition: all 0.2s; }
-        .no-results { padding: 20px 0; color: #666; }
-
-        /* 4. HERO SECTION */
-        .hero {
-            padding: 3.5rem 0 2.5rem 0;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 1.75rem; 
-            font-weight: 800;
-            margin: 0 0 0.8rem 0;
-            letter-spacing: -0.5px;
+        /* 4. BRAND LOGO */
+        .logo-wrapper {
+            display: flex; 
+            align-items: baseline; 
+            gap: 0; 
+            font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px;
             color: var(--text-main);
         }
-
-        .hero p {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin: 0;
+        .logo-love { color: var(--love-pink); }
+        .logo-calc { color: var(--calc-blue); }
+        
+        .logo-u-svg {
+            width: 22px; height: 22px; 
+            display: block;
+            margin-left: 4px;
+            margin-right: 2px;
+            transform: rotate(-15deg);
+            transform-origin: bottom center;
+            position: relative;
+            top: 2px;
         }
 
-        /* 5. CATEGORY GRID */
+        /* 5. HERO SECTION (UPDATED) */
+        .hero { padding: 3rem 0 2.5rem 0; text-align: center; max-width: 650px; margin: 0 auto; }
+        
+        /* UPDATED: Much smaller H1 */
+        .hero h1 { 
+            font-size: 1.8rem; /* Was 2.5rem */
+            font-weight: 800; 
+            margin: 0 0 0.8rem 0; 
+            letter-spacing: -0.5px; /* Less tight */
+            line-height: 1.3; 
+            color: var(--text-main);
+        }
+        .hero-highlight {
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1rem; color: var(--text-muted); margin: 0; }
+
+        /* 6. CATEGORY CARDS */
         .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 5rem;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 1.5rem; margin-bottom: 5rem;
         }
 
         .cat-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: var(--shadow);
-            transition: all 0.2s ease;
-            height: 100%;
+            background: var(--surface); padding: 2rem;
+            border-radius: var(--radius-lg); border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; justify-content: center;
+            height: 100%; position: relative; overflow: hidden;
         }
 
         .cat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-            border-color: #ccc;
+            transform: translateY(-5px); box-shadow: var(--shadow-float);
+            border-color: rgba(37, 99, 235, 0.3);
         }
 
-        .cat-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0 0 0.5rem 0;
-            color: var(--text-main);
+        .cat-icon {
+            font-size: 2rem; margin-bottom: 1rem;
+            background: var(--bg-body); width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
         }
 
-        .cat-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            line-height: 1.4;
-        }
-
-        .cat-link-text {
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* 6. FOOTER */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 0;
-            background: #f9f9f9;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+        .cat-title { font-size: 1.25rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--text-main); }
+        .cat-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.5; }
         
-        .footer-links { margin-bottom: 1.5rem; }
-        .footer-links a { margin: 0 12px; color: var(--text-main); font-weight: 500; }
-        .footer-links a:hover { text-decoration: underline; }
+        .cat-link-text { 
+            font-weight: 700; font-size: 0.9rem; color: var(--calc-blue); 
+            text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 5px;
+        }
+        .cat-card:hover .cat-link-text { gap: 8px; }
+
+        /* 7. OVERLAYS & SEARCH */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px);
+            z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.2s;
+        }
+        .overlay.active { opacity: 1; visibility: visible; }
+
+        .menu-drawer {
+            position: fixed; top: 0; left: 0; bottom: 0; width: 300px; 
+            background: var(--surface); z-index: 101; padding: 2rem;
+            transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 10px 0 25px rgba(0,0,0,0.1);
+        }
+        .overlay.active .menu-drawer { transform: translateX(0); }
+
+        .drawer-header { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center; }
+        .close-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--text-muted); }
+
+        .nav-links a { 
+            display: block; padding: 15px 0; font-size: 1.1rem; font-weight: 600; 
+            color: var(--text-main); border-bottom: 1px solid var(--border); 
+        }
+        .nav-links a:hover { color: var(--calc-blue); padding-left: 5px; }
+
+        .search-bar-container {
+            position: fixed; top: 0; left: 0; width: 100%; background: var(--surface); 
+            z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: transform 0.3s;
+            border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: center;
+        }
+        .overlay.active .search-bar-container { transform: translateY(0); }
+        .search-input {
+            width: 100%; padding: 12px 0; font-size: 1.2rem; border: none; 
+            border-bottom: 2px solid var(--border); outline: none; color: var(--text-main);
+        }
+        .search-input:focus { border-color: var(--calc-blue); }
+        .search-results-container { max-width: 1000px; margin: 0 auto; padding: 1rem 1.5rem; background: var(--surface); }
+        .search-result-item { display: block; padding: 15px 0; border-bottom: 1px solid var(--border); font-size: 1.1rem; font-weight: 600; }
+        .search-result-item:hover { color: var(--calc-blue); }
+
+        /* 8. FOOTER */
+        footer { 
+            border-top: 1px solid var(--border); padding: 4rem 0; 
+            background: var(--surface); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: auto; 
+        }
+        .footer-links a { margin: 0 15px; font-weight: 600; color: var(--text-main); }
+        .footer-links a:hover { color: var(--calc-blue); }
+
     </style>
 </head>
 <body>
@@ -233,8 +208,8 @@
     <div id="menuOverlay" class="overlay">
         <div class="menu-drawer">
             <div class="drawer-header">
-                <span style="font-weight:800; font-size:1.2rem;">Menu</span>
-                <button id="closeMenu" class="close-btn" aria-label="Close Menu">&times;</button>
+                <span style="font-weight:800; font-size:1.4rem;">Menu</span>
+                <button id="closeMenu" class="close-btn" aria-label="Close">&times;</button>
             </div>
             <nav class="nav-links">
                 <a href="/">Home</a>
@@ -249,8 +224,8 @@
 
     <div id="searchOverlay" class="overlay">
         <div class="search-bar-container">
-            <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools (e.g. Asphalt, CGPA)..." autocomplete="off">
-            <button id="closeSearch" class="close-btn" aria-label="Close Search">&times;</button>
+            <input type="text" id="globalSearchInput" class="search-input" placeholder="Search tools (e.g. 'Asphalt', 'CGPA')..." autocomplete="off">
+            <button id="closeSearch" class="close-btn" aria-label="Close">&times;</button>
         </div>
         <div id="searchResults" class="search-results-container"></div>
     </div>
@@ -258,10 +233,26 @@
     <header>
         <div class="container header-inner">
             <div class="header-left">
-                <button id="menuBtn" class="icon-btn" aria-label="Open Menu">
+                <button id="menuBtn" class="icon-btn" aria-label="Menu">
                     <div class="burger-icon"></div>
                 </button>
-                <a href="/" class="logo">LoveU Calc.</a>
+                
+                <a href="/" class="logo-wrapper">
+                    <span class="logo-love">Love</span>
+                    
+                    <svg class="logo-u-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="uGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#db2777" />
+                                <stop offset="100%" style="stop-color:#2563eb" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" 
+                              stroke="url(#uGradient)" stroke-width="28" stroke-linecap="round" />
+                    </svg>
+                    
+                    <span class="logo-calc">Calc.</span>
+                </a>
             </div>
             
             <button id="searchBtn" class="icon-btn search-icon" aria-label="Search">
@@ -273,33 +264,37 @@
     <main class="container">
         
         <section class="hero">
-            <h1>LoveU Calc Tools</h1>
-            <p>Select a category to find the right calculator.</p>
+            <h1>Tools made with <br><span class="hero-highlight">Love & Logic.</span></h1>
+            <p>Simple, private, and instant calculators for your daily needs.</p>
         </section>
 
         <div class="category-grid">
             <a href="/categories/education-academics" class="cat-card">
+                <div class="cat-icon">🎓</div>
                 <h2 class="cat-title">Education</h2>
-                <div class="cat-desc">CGPA, SGPA, percentage converters, and grade calculators.</div>
-                <div class="cat-link-text">Open Category →</div>
+                <div class="cat-desc">CGPA, SGPA, Percentage converters, and Grade tools.</div>
+                <div class="cat-link-text">Explore Tools <span>→</span></div>
             </a>
 
             <a href="/categories/salary-finance" class="cat-card">
+                <div class="cat-icon">💰</div>
                 <h2 class="cat-title">Finance</h2>
-                <div class="cat-desc">Salary hikes, mortgage payoffs, and interest calculators.</div>
-                <div class="cat-link-text">Open Category →</div>
+                <div class="cat-desc">Salary hikes, Mortgage payoff, and Interest calculators.</div>
+                <div class="cat-link-text">Explore Tools <span>→</span></div>
             </a>
 
             <a href="/categories/construction-materials" class="cat-card">
+                <div class="cat-icon">🏗️</div>
                 <h2 class="cat-title">Construction</h2>
-                <div class="cat-desc">Calculate concrete, asphalt, gravel, and lumber needs.</div>
-                <div class="cat-link-text">Open Category →</div>
+                <div class="cat-desc">Concrete, Asphalt, Gravel, and Board Foot estimation.</div>
+                <div class="cat-link-text">Explore Tools <span>→</span></div>
             </a>
 
             <a href="/categories/general-lifestyle" class="cat-card">
+                <div class="cat-icon">⚡</div>
                 <h2 class="cat-title">Lifestyle</h2>
-                <div class="cat-desc">Age calculation, sports stats, and daily utilities.</div>
-                <div class="cat-link-text">Open Category →</div>
+                <div class="cat-desc">Age calculation, Sports stats, and Daily utilities.</div>
+                <div class="cat-link-text">Explore Tools <span>→</span></div>
             </a>
         </div>
 
