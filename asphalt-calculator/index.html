@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asphalt Calculator - Tonnage, Sub-Base & Cost Estimator | LoveU Calc</title>
-    <meta name="description" content="Professional asphalt calculator. Estimate hot mix tonnage, sub-base gravel, and paving costs. Features density adjustments, waste factors, and PDF export for contractors.">
-    <meta name="keywords" content="asphalt calculator, blacktop calculator, driveway paving cost, hot mix asphalt tonnage, asphalt density formula, item 4 subbase calculator, paving estimate">
+    <meta name="description" content="Professional asphalt calculator. Estimate hot mix tonnage, sub-base gravel, and paving costs. Features density adjustments, labor rates, compaction factors, and PDF export.">
+    <meta name="keywords" content="asphalt calculator, blacktop calculator, driveway paving cost, hot mix asphalt tonnage, asphalt density formula, paving estimate, labor cost calculator">
     <meta name="author" content="LoveU Calc">
     <link rel="canonical" href="https://loveucalc.com/asphalt-calculator/">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://loveucalc.com/asphalt-calculator/">
     <meta property="og:title" content="Asphalt Calculator - Professional Tonnage Estimator">
-    <meta property="og:description" content="Calculate asphalt tonnage, gravel base, and project costs instantly. Free tool for contractors and homeowners.">
+    <meta property="og:description" content="Calculate asphalt tonnage, gravel base, labor rates, and project costs instantly. Free tool for contractors and homeowners.">
     <meta property="og:image" content="https://loveucalc.com/assets/og-asphalt.png">
 
     <script type="application/ld+json">
@@ -25,33 +25,59 @@
           "url": "https://loveucalc.com/asphalt-calculator/",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "All",
-          "description": "A professional calculator to estimate asphalt tonnage, sub-base gravel volume, and paving costs.",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          "description": "A professional calculator to estimate asphalt tonnage, sub-base gravel volume, labor costs, and total paving expenses.",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "featureList": "Asphalt Tonnage, Cost Estimation, Sub-Base Calculation, PDF Export"
         },
         {
-          "@type": "Article",
-          "headline": "How to Calculate Asphalt Tonnage",
-          "description": "A complete guide to estimating hot mix asphalt for driveways and parking lots, including density formulas and thickness guides.",
-          "author": { "@type": "Organization", "name": "LoveU Calc" }
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://loveucalc.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Construction Calculators", "item": "https://loveucalc.com/categories/construction-materials" },
+            { "@type": "ListItem", "position": 3, "name": "Asphalt Calculator", "item": "https://loveucalc.com/asphalt-calculator/" }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to Calculate Asphalt Tonnage",
+          "step": [
+            { "@type": "HowToStep", "name": "Measure Area", "text": "Measure the length and width of the driveway or parking lot." },
+            { "@type": "HowToStep", "name": "Select Thickness", "text": "Choose the depth of the asphalt layer (typically 2-3 inches)." },
+            { "@type": "HowToStep", "name": "Determine Density", "text": "Use the standard density of 145 lbs/ft³ or adjust based on your specific mix." },
+            { "@type": "HowToStep", "name": "Calculate", "text": "Multiply Volume x Density to get the total weight in tons." }
+          ]
         },
         {
           "@type": "FAQPage",
-          "mainEntity": [{
-            "@type": "Question",
-            "name": "How much does a ton of asphalt cover?",
-            "acceptedAnswer": { "@type": "Answer", "text": "At a standard residential thickness of 2 inches, one ton of asphalt covers approximately 80 square feet (about 7.4 square meters)." }
-          }, {
-            "@type": "Question",
-            "name": "What is the standard density of asphalt?",
-            "acceptedAnswer": { "@type": "Answer", "text": "The industry standard density for hot mix asphalt is 145 lbs per cubic foot (approx. 2322 kg/m³). This varies slightly based on the aggregate mix." }
-          }]
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How much does a ton of asphalt cover?",
+              "acceptedAnswer": { "@type": "Answer", "text": "At a standard residential thickness of 2 inches, one ton of asphalt covers approximately 80 square feet (about 7.4 square meters)." }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the standard density of asphalt?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The industry standard density for hot mix asphalt is 145 lbs per cubic foot (approx. 2322 kg/m³). This varies slightly based on the aggregate mix." }
+            },
+            {
+              "@type": "Question",
+              "name": "How much does asphalt cost per ton?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Hot mix asphalt typically costs between $60 and $80 per ton for the material alone, excluding delivery and labor." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I put new asphalt over old asphalt?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, this is called an overlay. If the base is stable, you can apply a 1.5 to 2-inch layer of new asphalt over the old surface." }
+            }
+          ]
         }
       ]
     }
     </script>
 
     <style>
-        /* --- 1. GLOBAL STYLES --- */
+        /* --- 1. GLOBAL STYLES (Optimized) --- */
         :root {
             --bg: #f8fafc; --surf: #ffffff;
             --txt: #0f172a; --mut: #475569; --bord: #cbd5e1;
@@ -73,16 +99,12 @@
         header { padding: 1rem 0; position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem; }
         .head-in { display: flex; justify-content: space-between; align-items: center; }
         .head-l { display: flex; align-items: center; gap: 1.2rem; }
-        
-        /* Icons */
         .icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .icon-btn:hover { background: rgba(0,0,0,0.04); }
         .ico-burger { width: 22px; height: 2.5px; background: var(--txt); position: relative; border-radius: 2px; }
         .ico-burger::before, .ico-burger::after { content: ''; position: absolute; left: 0; width: 22px; height: 2.5px; background: var(--txt); border-radius: 2px; }
         .ico-burger::before { top: -7px; } .ico-burger::after { top: 7px; }
         .ico-svg { width: 24px; height: 24px; fill: none; stroke: var(--txt); stroke-width: 2.5; stroke-linecap: round; }
-
-        /* Logo */
         .logo { display: flex; align-items: baseline; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; color: var(--txt); }
         .l-pk { color: var(--pk); } .l-bl { color: var(--bl); }
         .l-svg { width: 22px; height: 22px; margin: 0 2px 0 4px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
@@ -122,7 +144,7 @@
         .btn-sec { background: #fff; border: 2px dashed var(--bl); color: var(--bl); padding: 12px; border-radius: var(--rad); font-weight: 700; cursor: pointer; width: 100%; margin-top: 1rem; }
         .btn-res { background: none; border: none; color: var(--mut); margin-top: 1rem; text-decoration: underline; cursor: pointer; }
 
-        /* Results */
+        /* Result Box & Cost Bars */
         .res-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--rad); padding: 2rem; margin-top: 2rem; text-align: center; display: none; }
         .res-box.visible { display: block; animation: popIn 0.3s; }
         @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -132,6 +154,13 @@
         
         .sec-res { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed #bfdbfe; font-size: 1.1rem; }
         .sec-res strong { color: var(--txt); font-weight: 800; font-size: 1.4rem; }
+
+        /* Visual Bar Chart */
+        .cost-wrap { margin-top: 1.5rem; width: 100%; }
+        .cost-bar { display: flex; height: 24px; border-radius: 12px; overflow: hidden; width: 100%; background: #e2e8f0; }
+        .bar-seg { height: 100%; transition: width 0.5s ease-out; }
+        .legend { display: flex; justify-content: center; gap: 15px; margin-top: 10px; font-size: 0.85rem; }
+        .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
 
         .sig { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--bord); font-size: 0.9rem; color: var(--mut); font-weight: 500; }
 
@@ -208,7 +237,7 @@
 
             <div style="margin-bottom: 2rem;">
                 <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px;">Asphalt Calculator</h1>
-                <p style="color: var(--mut); font-size: 1.1rem;">Calculate precise hot mix tonnage, sub-base gravel, and project costs. Trusted by contractors and homeowners.</p>
+                <p style="color: var(--mut); font-size: 1.1rem;">Calculate precise hot mix tonnage, sub-base gravel, labor costs, and project estimates.</p>
             </div>
 
             <div class="calc-card">
@@ -218,14 +247,26 @@
                             <label for="length">Length</label>
                             <div class="inp-grp">
                                 <input type="number" id="length" placeholder="0" required inputmode="decimal">
-                                <select id="lengthUnit"><option value="ft">Feet</option><option value="m">Meters</option><option value="yd">Yards</option></select>
+                                <select id="lengthUnit">
+                                    <option value="ft">Feet</option>
+                                    <option value="m">Meters</option>
+                                    <option value="yd">Yards</option>
+                                    <option value="in">Inches</option>
+                                    <option value="cm">CM</option>
+                                </select>
                             </div>
                         </div>
                         <div>
                             <label for="width">Width</label>
                             <div class="inp-grp">
                                 <input type="number" id="width" placeholder="0" required inputmode="decimal">
-                                <select id="widthUnit"><option value="ft">Feet</option><option value="m">Meters</option><option value="yd">Yards</option></select>
+                                <select id="widthUnit">
+                                    <option value="ft">Feet</option>
+                                    <option value="m">Meters</option>
+                                    <option value="yd">Yards</option>
+                                    <option value="in">Inches</option>
+                                    <option value="cm">CM</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -235,15 +276,21 @@
                             <label for="depth">Thickness</label>
                             <div class="inp-grp">
                                 <input type="number" id="depth" placeholder="e.g. 3" required inputmode="decimal">
-                                <select id="depthUnit"><option value="in">Inches</option><option value="cm">CM</option></select>
+                                <select id="depthUnit">
+                                    <option value="in">Inches</option>
+                                    <option value="cm">CM</option>
+                                    <option value="ft">Feet</option>
+                                    <option value="m">Meters</option>
+                                </select>
                             </div>
                         </div>
                         <div>
                             <label for="waste">Safety Margin (Waste)</label>
                             <select id="waste" class="full-sel">
-                                <option value="0.05">+5% (Standard)</option>
-                                <option value="0.10">+10% (Irregular)</option>
                                 <option value="0.0">0% (Exact)</option>
+                                <option value="0.05" selected>+5% (Standard)</option>
+                                <option value="0.10">+10% (Irregular)</option>
+                                <option value="0.15">+15% (Complex)</option>
                             </select>
                         </div>
                     </div>
@@ -268,22 +315,35 @@
                         </div>
                     </div>
 
-                    <button type="button" class="adv-link" id="advToggle" onclick="toggleAdvanced()">Show Advanced (Density & Cost) ▼</button>
+                    <button type="button" class="adv-link" id="advToggle" onclick="toggleAdvanced()">Show Advanced (Compaction, Labor & Cost) ▼</button>
 
                     <div id="advSection" class="hid-sec">
                         <div class="grid-2">
                             <div>
-                                <label for="density">Asphalt Density (lbs/ft³)</label>
-                                <input type="number" id="density" value="145" class="full-sel">
+                                <label for="price">Material Price ($/Ton)</label>
+                                <div class="inp-grp"><input type="number" id="price" placeholder="e.g. 75"></div>
                             </div>
                             <div>
-                                <label for="price">Price ($/Ton)</label>
-                                <div class="inp-grp"><input type="number" id="price" placeholder="e.g. 75"></div>
+                                <label for="laborPrice">Labor Rate ($/Sq Ft)</label>
+                                <div class="inp-grp"><input type="number" id="laborPrice" placeholder="e.g. 2.50"></div>
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div>
+                                <label for="compaction">Compaction Factor</label>
+                                <select id="compaction" class="full-sel">
+                                    <option value="1.15">Yes (+15% Standard)</option>
+                                    <option value="1.0">No (Loose Volume)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="density">Density (lbs/ft³)</label>
+                                <input type="number" id="density" value="145" class="full-sel">
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-act">Calculate Tonnage</button>
+                    <button type="submit" class="btn-act">Calculate Estimate</button>
                     
                     <div style="text-align:center;">
                         <button type="button" class="btn-res" onclick="document.getElementById('calcForm').reset(); document.getElementById('resultBox').style.display='none';">Reset Tool</button>
@@ -301,8 +361,19 @@
                     </div>
 
                     <div id="costResultBox" class="sec-res" style="display:none;">
-                        <div class="res-lbl" style="color:#000;">Estimated Material Cost</div>
-                        <div style="font-size: 2rem; font-weight:800; color:var(--grn);" id="resCost">$0.00</div>
+                        <div class="res-lbl" style="color:#000;">Estimated Total Project Cost</div>
+                        <div style="font-size: 2rem; font-weight:800; color:var(--grn);" id="resTotalCost">$0.00</div>
+                        
+                        <div class="cost-wrap">
+                            <div class="cost-bar">
+                                <div class="bar-seg" id="barMat" style="background:var(--grn); width:50%;"></div>
+                                <div class="bar-seg" id="barLab" style="background:var(--bl); width:50%;"></div>
+                            </div>
+                            <div class="legend">
+                                <div><span class="dot" style="background:var(--grn);"></span>Material <span id="txtMat">($0)</span></div>
+                                <div><span class="dot" style="background:var(--bl);"></span>Labor <span id="txtLab">($0)</span></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div style="margin-top:1.5rem; font-size:0.9rem; color:var(--mut);">
@@ -312,88 +383,66 @@
 
                 <div class="sig">Made with <span class="l-pk">Love</span> & <span class="l-bl">Logic</span>.</div>
             </div>
-            <article class="content">
-                <h2>Introduction to Asphalt Calculation</h2>
-                <p>Whether you are a homeowner planning a new driveway or a contractor bidding on a commercial parking lot, accuracy is your most valuable asset. Ordering too little asphalt halts the project and requires costly second deliveries (often with cooling joints in the pavement). Ordering too much eats directly into your profit margin or budget.</p>
-                <p>The <strong>LoveU Calc Asphalt Calculator</strong> is designed to solve this problem by using industry-standard density formulas. It moves beyond simple volume calculations by accounting for specific material density, compaction factors, and necessary waste margins.</p>
 
-                <h2>Who Should Use This Tool?</h2>
+            <article class="content">
+                <h2>Comprehensive Guide to Asphalt Estimation</h2>
+                <p>Accuracy is the difference between a profitable paving job and a costly disaster. Whether you are a homeowner planning a DIY driveway resurfacing or a contractor bidding on a commercial parking lot, understanding how to calculate asphalt tonnage, sub-base requirements, and labor costs is essential. The <strong>LoveU Calc Asphalt Calculator</strong> simplifies this by combining industry-standard density formulas with practical job-site variables like compaction and waste.</p>
+
+                <h2>Who Is This Tool For?</h2>
                 <ul>
-                    <li><strong>Homeowners (DIY):</strong> Planning to resurface your own driveway? Use this tool to estimate costs before calling contractors. Knowing the tonnage helps you verify if a quote is reasonable.</li>
-                    <li><strong>Paving Contractors:</strong> Use the "PDF Job Sheet" feature to print estimates for your clients or to hand to the plant operator. The customizable density field allows you to adjust for different mix types (e.g., binder course vs. top course).</li>
-                    <li><strong>Property Managers:</strong> Budgeting for parking lot maintenance? Enter the dimensions of your lot to get an instant material cost estimate for budgeting annual repairs.</li>
-                    <li><strong>Landscapers:</strong> Estimating sub-base gravel for patios or walkways? The "Sub-Base" toggle turns this into a gravel calculator instantly.</li>
+                    <li><strong>Homeowners:</strong> Use this to validate quotes from paving companies. By knowing the exact tonnage and estimated labor cost, you can ensure you aren't being overcharged.</li>
+                    <li><strong>Paving Contractors:</strong> Generate quick, accurate estimates on the go. Use the "PDF Job Sheet" feature to print a clean material order for the asphalt plant or a quote for your client.</li>
+                    <li><strong>Property Managers:</strong> Budget for annual maintenance. Quickly estimate the cost of filling potholes or overlaying an aging parking lot.</li>
+                    <li><strong>Landscapers:</strong> The "Sub-Base" feature makes this an excellent tool for calculating crushed stone ("Item 4") requirements for patios and walkways.</li>
                 </ul>
 
-                <h2>How to Use the Calculator (Step-by-Step)</h2>
+                <h2>Step-by-Step: How to Use the Calculator</h2>
                 <ol>
-                    <li><strong>Measure the Area:</strong> Enter the Length and Width of the space. You can mix units (e.g., Length in Feet, Width in Inches) and our tool will handle the conversion.</li>
-                    <li><strong>Select Thickness:</strong> Determine how deep the pavement needs to be (see our guide below). Enter this in inches.</li>
-                    <li><strong>Set Safety Margin:</strong> Select a "Waste" percentage. We default to 5%, which covers minor sub-grade irregularities and edges. For complex shapes (curves, cul-de-sacs), select 10%.</li>
-                    <li><strong>Include Sub-Base (Optional):</strong> If you are paving on bare earth, check "Include Gravel Sub-Base." This will calculate the tonnage of crushed stone needed for the foundation.</li>
-                    <li><strong>Advanced Settings:</strong> Click "Show Advanced" to adjust the Asphalt Density (default is 145 lbs/ft³) or enter a Price Per Ton to get a cost estimate.</li>
+                    <li><strong>Dimensions:</strong> Enter the Length and Width of the area. You can mix units (e.g., Meters for length, Feet for width), and our tool handles the conversion.</li>
+                    <li><strong>Thickness:</strong> Specify the depth of the asphalt layer. See our "Thickness Guide" below to decide between 2 inches (overlay) or 3+ inches (new drive).</li>
+                    <li><strong>Waste Factor:</strong> Select a safety margin. We recommend <strong>+5%</strong> for standard rectangles and <strong>+10%</strong> for curved driveways or irregular shapes to account for edge ramping and sub-grade inconsistencies.</li>
+                    <li><strong>Sub-Base (Optional):</strong> If paving over bare earth, toggle "Include Gravel Sub-Base." This calculates the tonnage of crushed stone needed for the foundation.</li>
+                    <li><strong>Advanced Costs:</strong> Click "Show Advanced" to enter:
+                        <ul>
+                            <li><strong>Material Price:</strong> The cost per ton of hot mix (typically $60-$80).</li>
+                            <li><strong>Labor Rate:</strong> The installation cost per square foot (typically $1.50-$3.00).</li>
+                            <li><strong>Compaction:</strong> Choose "Yes (+15%)" to calculate the weight needed *after* rolling, ensuring you don't run short.</li>
+                        </ul>
+                    </li>
                 </ol>
 
                 <div class="info-box">
                     <h3>The Golden Formula</h3>
                     <p>The math behind asphalt estimation is: <strong>Volume × Density = Weight</strong>.</p>
-                    <p><em>(Length × Width × Thickness) × 145 lbs/ft³ ÷ 2000 = Tons</em></p>
+                    <p><em>((Length × Width × Thickness) × 145 lbs/ft³) ÷ 2000 = Tons</em></p>
                 </div>
 
-                <h2>Asphalt Thickness Guide: How Deep to Pave?</h2>
-                <p>Choosing the correct thickness is critical for longevity. If the layer is too thin, it will crack under vehicle weight. If it's too thick, you are wasting money.</p>
+                <h2>Asphalt Thickness Guide</h2>
+                <p>Choosing the right depth ensures longevity without overspending:</p>
                 
-                <h3>1. Resurfacing (Overlay)</h3>
-                <p><strong>Recommended Depth: 1.5 to 2 Inches.</strong><br>
-                If your existing driveway is structurally sound but looks old or has minor surface cracks, an overlay is the most cost-effective solution. A 1.5-inch layer provides a fresh, black finish and seals the surface without raising the grade too much (which can affect garage door clearance).</p>
 
-                <h3>2. New Residential Driveway</h3>
-                <p><strong>Recommended Depth: 2.5 to 3 Inches.</strong><br>
-                For a brand new driveway installation on a gravel base, 3 inches (compacted) is the gold standard. This supports standard passenger vehicles, SUVs, and occasional light delivery trucks. This is often laid in a single "lift" (layer).</p>
+[Image of asphalt pavement cross section]
 
-                <h3>3. Commercial / Heavy Duty</h3>
-                <p><strong>Recommended Depth: 4 to 6+ Inches.</strong><br>
-                Parking lots, roadways, or driveways that host heavy machinery (RVs, boats, dump trucks) require structural strength. This is rarely done in one layer. Instead, it is laid in two lifts:</p>
                 <ul>
-                    <li><strong>Base Course (Binder):</strong> 3-4 inches of coarse aggregate mix for strength.</li>
-                    <li><strong>Surface Course (Top):</strong> 1.5-2 inches of fine aggregate mix for a smooth, water-resistant finish.</li>
+                    <li><strong>1.5 - 2 Inches (Resurfacing):</strong> Ideal for overlaying an existing driveway that is structurally sound but has surface wear.</li>
+                    <li><strong>2.5 - 3 Inches (New Driveway):</strong> The standard for new residential driveways on a gravel base. Supports cars and light trucks.</li>
+                    <li><strong>4 - 6 Inches (Heavy Duty):</strong> Required for commercial lots hosting dump trucks or RVs. Usually applied in two layers (Binder course + Surface course).</li>
                 </ul>
 
-                <h2>Hot Mix vs. Cold Patch: Knowing the Difference</h2>
-                <p>One of the most common mistakes DIYers make is confusing the materials. This calculator is primarily for <strong>Hot Mix Asphalt</strong>.</p>
-                
-                <h3>Hot Mix Asphalt</h3>
-                <p>This is what you see on roads. It is a mixture of stone, sand, and liquid asphalt cement heated to ~300°F. It is delivered by dump trucks and must be spread and rolled while hot. As it cools, it hardens into a rock-solid surface. It is sold by the <strong>Ton</strong>.</p>
+                <h2>Hot Mix vs. Cold Patch: What Do You Need?</h2>
+                <p><strong>Hot Mix Asphalt:</strong> This calculator is designed for Hot Mix. It is delivered by truck at ~300°F and must be rolled immediately. It is sold by the <strong>Ton</strong>.</p>
+                <p><strong>Cold Patch:</strong> Sold in bags at hardware stores. It remains soft until compacted and is strictly for fixing small potholes. Do not attempt to pave a driveway with cold patch.</p>
 
-                <h3>Cold Patch (Cold Mix)</h3>
-                <p>This material is sold in 50lb bags at hardware stores. It contains special additives that keep it soft at room temperature. It hardens via evaporation over weeks. <strong>Do not use cold patch for a whole driveway.</strong> It is strictly for repairing small potholes (less than 2 sq ft). If you are fixing a pothole, calculate the volume, but buy bags, not a truckload.</p>
+                <h2>Understanding Costs: Material vs. Labor</h2>
+                <p>Our tool visualizes the cost breakdown for you. Typically, the <strong>Material Cost</strong> (the asphalt itself) is only 30-40% of the total price. The rest covers <strong>Labor & Equipment</strong> (trucking, crew, pavers, rollers) and <strong>Prep Work</strong> (excavation, grading). This is why a quote might be $5,000 even if the asphalt only costs $1,500.</p>
 
-                <h2>The Importance of Sub-Base (Gravel)</h2>
-                <p>Asphalt is a flexible pavement. This means if the ground underneath moves, the asphalt moves (and cracks). The "Sub-Base" is the foundation that prevents this.</p>
-                <p>Before paving, you must have a layer of <strong>Crushed Gravel (Item 4 or Crusher Run)</strong>. This gravel locks together to form a solid table. For a standard driveway, you need 6 to 8 inches of gravel compacted to 95% density. Our tool calculates this for you using a standard gravel density of 110 lbs/ft³.</p>
-
-                <h2>Cost Estimation Factors</h2>
-                <p>While our tool provides a material cost estimate, the final price of a paving job involves much more:</p>
-                <ul>
-                    <li><strong>Material Cost:</strong> ~$60 - $80 per ton at the plant (varies by oil prices).</li>
-                    <li><strong>Trucking:</strong> Costs to haul the material from the plant to your site.</li>
-                    <li><strong>Labor & Equipment:</strong> Paying the crew, paver, and roller operators.</li>
-                    <li><strong>Prep Work:</strong> Excavation, grading, and compacting the sub-base often cost as much as the paving itself.</li>
-                </ul>
-                <p><em>Rough Rule of Thumb:</em> The installed cost is usually 2x to 3x the raw material cost.</p>
-
-                <h2>Frequently Asked Questions (FAQ)</h2>
+                <h2>Frequently Asked Questions</h2>
                 <h3>How much does a ton of asphalt cover?</h3>
-                <p>At a standard thickness of 2 inches, one ton of asphalt covers approximately <strong>80 square feet</strong> (an area roughly 8 feet by 10 feet). At 3 inches thick, it covers about 54 square feet.</p>
-
-                <h3>What is the density of asphalt?</h3>
-                <p>The standard density used in the US is <strong>145 lbs per cubic foot</strong> (or roughly 2.32 metric tonnes per cubic meter). However, this can vary between 140 and 150 depending on the specific "Job Mix Formula" (JMF) used by your local plant. Our calculator allows you to edit this value in the "Advanced" section.</p>
-
-                <h3>Can I pave over concrete?</h3>
-                <p>Yes, but it comes with risks. Concrete has expansion joints that move with temperature. Eventually, these cracks will "reflect" up through the asphalt (Reflective Cracking). To mitigate this, contractors often use a specialized geotextile fabric between the concrete and the new asphalt layer.</p>
-
-                <h3>How long before I can drive on a new driveway?</h3>
-                <p>You should wait at least <strong>3 to 5 days</strong> before driving on new asphalt. However, it takes 6 to 12 months to fully cure. During that first summer, avoid turning your steering wheel while the car is stopped (power steering dry turns), as this will scar the soft surface.</p>
+                <p>At 2 inches thick, 1 ton covers approx. 80 sq ft. At 3 inches thick, it covers approx. 54 sq ft.</p>
+                <h3>What is the standard density?</h3>
+                <p>We use the industry standard of <strong>145 lbs per cubic foot</strong> (2322 kg/m³). You can adjust this in the Advanced settings if your plant uses a specific mix density.</p>
+                <h3>How long before I can drive on it?</h3>
+                <p>Wait at least 3 days. However, full curing takes 6-12 months. Avoid power-steering turns while stationary during the first summer to prevent scarring.</p>
             </article>
         </div>
     </main>
