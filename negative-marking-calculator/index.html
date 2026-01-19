@@ -1,180 +1,386 @@
-/* --- NEGATIVE MARKING CALCULATOR LOGIC --- */
-
-// Helper to parse "1/3" or "0.33"
-function parsePenalty(val, marksPerQ) {
-    val = val.toString().trim();
-    if (val.includes('/')) {
-        const parts = val.split('/');
-        // If user enters 1/3, do they mean 1/3 of a mark or 1/3 of the Question Value?
-        // Standard convention: 1/3 usually means 1/3rd of the marks assigned.
-        return marksPerQ * (parseFloat(parts[0]) / parseFloat(parts[1]));
-    }
-    return parseFloat(val);
-}
-
-function calculateScore() {
-    const totalQs = parseInt(document.getElementById('totalQs').value) || 0;
-    const attempted = parseInt(document.getElementById('attempted').value) || 0;
-    const correct = parseInt(document.getElementById('correct').value) || 0;
-    const marksPerQ = parseFloat(document.getElementById('marksPerQ').value) || 0;
-    const penaltyInput = document.getElementById('penalty').value;
-
-    if (attempted > totalQs) {
-        alert("Attempted questions cannot exceed Total Questions.");
-        return;
-    }
-    if (correct > attempted) {
-        alert("Correct answers cannot exceed Attempted questions.");
-        return;
-    }
-
-    // Calculations
-    const wrong = attempted - correct;
-    const penaltyValue = parsePenalty(penaltyInput, marksPerQ);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negative Marking Calculator - Exam Score & Strategy | LoveU Calc</title>
+    <meta name="description" content="Calculate exam scores with negative marking instantly. Analyze accuracy, break-even probability, and guessing strategy for JEE, NEET, UPSC, and competitive exams.">
+    <meta name="keywords" content="negative marking calculator, exam score calculator, JEE main rank predictor, NEET score calculator, UPSC negative marking, accuracy calculator, guessing strategy">
+    <meta name="author" content="LoveU Calc">
+    <link rel="canonical" href="https://loveucalc.com/negative-marking-calculator/">
     
-    const rawScore = correct * marksPerQ;
-    const negScore = wrong * penaltyValue;
-    const netScore = rawScore - negScore;
-    const totalPossible = totalQs * marksPerQ;
-    
-    const accuracy = attempted > 0 ? (correct / attempted) * 100 : 0;
-    
-    // Break Even: penalty / (marks + penalty)
-    const breakEven = (penaltyValue / (marksPerQ + penaltyValue)) * 100;
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://loveucalc.com/negative-marking-calculator/">
+    <meta property="og:title" content="Negative Marking Calculator & Strategy Tool">
+    <meta property="og:description" content="Master your exam strategy. Calculate scores, analyze accuracy, and determine safe guessing limits.">
+    <meta property="og:image" content="https://loveucalc.com/assets/og-negative-marking.png">
 
-    // Update UI
-    document.getElementById('resNet').innerText = netScore.toFixed(2);
-    document.getElementById('resTotalMarks').innerText = totalPossible;
-    document.getElementById('resAcc').innerText = accuracy.toFixed(1) + '%';
-    document.getElementById('resRaw').innerText = '+' + rawScore.toFixed(2);
-    document.getElementById('resNeg').innerText = '-' + negScore.toFixed(2);
-    
-    document.getElementById('resBE').innerText = breakEven.toFixed(1) + '%';
-    document.getElementById('resBENum').innerText = breakEven.toFixed(1);
-
-    // Badge Logic
-    const badge = document.getElementById('breakEvenBadge');
-    if (accuracy >= breakEven) {
-        badge.className = 'safe-badge is-safe';
-        badge.innerText = 'Safe Strategy (Profitable)';
-    } else {
-        badge.className = 'safe-badge is-risky';
-        badge.innerText = 'Risky Strategy (Losing Marks)';
-    }
-
-    // Reveal Box
-    const resBox = document.getElementById('resultBox');
-    resBox.style.display = 'block';
-    resBox.classList.add('visible');
-    resBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-function toggleStrategy() {
-    const section = document.getElementById('stratSection');
-    const btn = document.getElementById('advToggle');
-    if (section.style.display === 'block') {
-        section.style.display = 'none';
-        btn.innerText = 'Show Strategy & Simulation ▼';
-    } else {
-        section.style.display = 'block';
-        btn.innerText = 'Hide Strategy ▲';
-    }
-}
-
-function runSimulation() {
-    const tq = parseInt(document.getElementById('totalQs').value) || 0;
-    const mpq = parseFloat(document.getElementById('marksPerQ').value) || 0;
-    const ppw = parsePenalty(document.getElementById('penalty').value, mpq);
-    
-    const targetScore = parseFloat(document.getElementById('cutoff').value);
-    const accPercent = parseFloat(document.getElementById('targetAcc').value);
-    const container = document.getElementById('simResults');
-
-    if (!tq || isNaN(targetScore) || isNaN(accPercent)) return;
-
-    const simAcc = accPercent / 100;
-    
-    let html = `<table class="sim-table">
-                <thead><tr><th>Attempted</th><th>Exp. Score</th><th>Result</th></tr></thead><tbody>`;
-    
-    // Simulate attempts at 100%, 90%, 80%, 70%
-    [1.0, 0.9, 0.8, 0.7].forEach(lvl => {
-        const sAtt = Math.floor(tq * lvl); 
-        const sCorr = Math.floor(sAtt * simAcc);
-        const sWrong = sAtt - sCorr;
-        
-        const expScore = (sCorr * mpq) - (sWrong * ppw);
-        const passed = expScore >= targetScore;
-        
-        const color = passed ? '#059669' : '#dc2626';
-        const label = passed ? 'CLEARED' : 'FAILED';
-        
-        html += `<tr>
-                    <td>${Math.round(lvl*100)}% (${sAtt} Qs)</td>
-                    <td>${expScore.toFixed(1)}</td>
-                    <td style="color:${color}; font-weight:700;">${label}</td>
-                 </tr>`;
-    });
-    
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
-function resetTool() {
-    document.getElementById('calcForm').reset();
-    document.getElementById('resultBox').style.display = 'none';
-    document.getElementById('stratSection').style.display = 'none';
-    document.getElementById('advToggle').innerText = 'Show Strategy & Simulation ▼';
-}
-
-/* --- LAZY PDF --- */
-async function generatePDF() {
-    const btn = document.querySelector('.btn-sec');
-    if (!window.jspdf) {
-        const origText = btn.innerText;
-        btn.innerText = 'Loading PDF Engine...';
-        btn.disabled = true;
-        try {
-            await new Promise((resolve, reject) => {
-                const s = document.createElement('script');
-                s.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-                s.onload = resolve;
-                s.onerror = reject;
-                document.head.appendChild(s);
-            });
-        } catch(e) {
-            alert("Error loading PDF engine.");
-            btn.innerText = origText;
-            btn.disabled = false;
-            return;
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Negative Marking Calculator",
+          "url": "https://loveucalc.com/negative-marking-calculator/",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "All",
+          "description": "A tool to calculate exam scores with negative marking, analyze accuracy, and simulate guessing strategies.",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "featureList": "Score Calculation, Accuracy Analysis, Break-Even Probability, PDF Export",
+          "author": { "@type": "Organization", "name": "LoveU Calc" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://loveucalc.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Education Calculators", "item": "https://loveucalc.com/categories/education-academics" },
+            { "@type": "ListItem", "position": 3, "name": "Negative Marking Calculator", "item": "https://loveucalc.com/negative-marking-calculator/" }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to Calculate Negative Marking Scores",
+          "step": [
+            { "@type": "HowToStep", "name": "Enter Total Questions", "text": "Input the total number of questions in the exam or section." },
+            { "@type": "HowToStep", "name": "Input Attempts", "text": "Enter how many questions you attempted and how many were correct." },
+            { "@type": "HowToStep", "name": "Define Marking Scheme", "text": "Set the marks awarded for a correct answer (e.g., +4) and the penalty for a wrong answer (e.g., -1 or 1/3)." },
+            { "@type": "HowToStep", "name": "Analyze", "text": "The tool calculates your Net Score, Accuracy Percentage, and effective penalty impact." }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is 1/3 negative marking?",
+              "acceptedAnswer": { "@type": "Answer", "text": "In a 1/3 negative marking scheme, for every wrong answer, 33.33% of the marks assigned to that question are deducted from your total score." }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I calculate accuracy percentage?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Accuracy is calculated by dividing the number of Correct Answers by the Total Questions Attempted, then multiplying by 100." }
+            }
+          ]
         }
-        btn.innerText = origText;
-        btn.disabled = false;
+      ]
     }
+    </script>
 
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.text("Exam Strategy Report", 105, 20, null, null, "center");
-    
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.text("Generated: " + new Date().toLocaleDateString(), 20, 35);
+    <style>
+        /* --- 1. GLOBAL STYLES (Synced) --- */
+        :root {
+            --bg: #f8fafc; --surf: #ffffff;
+            --txt: #0f172a; --mut: #475569; --bord: #cbd5e1;
+            --pk: #db2777; --bl: #2563eb; --grn: #059669; --red: #dc2626;
+            --grad: linear-gradient(135deg, #db2777 0%, #2563eb 100%);
+            --rad: 12px; --shad: 0 1px 3px rgba(0,0,0,0.05);
+        }
 
-    const net = document.getElementById('resNet').innerText;
-    const acc = document.getElementById('resAcc').innerText;
-    const raw = document.getElementById('resRaw').innerText;
-    const neg = document.getElementById('resNeg').innerText;
-    
-    doc.text(`Final Net Score: ${net}`, 20, 50);
-    doc.text(`Accuracy: ${acc}`, 20, 60);
-    doc.text(`Raw Marks: ${raw}`, 20, 70);
-    doc.text(`Penalty Deducted: ${neg}`, 20, 80);
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--txt); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
+        
+        /* Layout */
+        .container { max-width: 1000px; width: 100%; margin: 0 auto; padding: 0 1.5rem; }
+        .limiter { max-width: 800px; width: 100%; margin: 0 auto; }
+        @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
+        
+        /* Header */
+        header { padding: 1rem 0; position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .head-in { display: flex; justify-content: space-between; align-items: center; }
+        .head-l { display: flex; align-items: center; gap: 1.2rem; }
+        .icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .icon-btn:hover { background: rgba(0,0,0,0.04); }
+        .ico-burger { width: 22px; height: 2.5px; background: var(--txt); position: relative; border-radius: 2px; }
+        .ico-burger::before, .ico-burger::after { content: ''; position: absolute; left: 0; width: 22px; height: 2.5px; background: var(--txt); border-radius: 2px; }
+        .ico-burger::before { top: -7px; } .ico-burger::after { top: 7px; }
+        .ico-svg { width: 24px; height: 24px; fill: none; stroke: var(--txt); stroke-width: 2.5; stroke-linecap: round; }
+        .logo { display: flex; align-items: baseline; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; color: var(--txt); }
+        .l-pk { color: var(--pk); } .l-bl { color: var(--bl); }
+        .l-svg { width: 22px; height: 22px; margin: 0 2px 0 4px; transform: rotate(-15deg); transform-origin: bottom center; position: relative; top: 2px; }
 
-    doc.setFontSize(10);
-    doc.text("Tool by LoveU Calc", 105, 280, null, null, "center");
-    
-    doc.save("Exam-Strategy.pdf");
-}
+        /* Footer */
+        footer { border-top: 1px solid var(--bord); padding: 4rem 0; background: var(--surf); text-align: center; color: var(--mut); font-size: 0.9rem; margin-top: auto; }
+        .foot-lnk a { margin: 0 15px; font-weight: 600; color: var(--txt); }
+
+        /* --- 2. TOOL STYLES --- */
+        .calc-card { background: var(--surf); padding: 2rem; border-radius: 16px; border: 1px solid var(--bord); box-shadow: var(--shad); margin-bottom: 3rem; width: 100%; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+        
+        label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .inp-grp { display: flex; width: 100%; border-radius: var(--rad); overflow: hidden; border: 1px solid var(--bord); transition: 0.2s; }
+        .inp-grp:focus-within { border-color: var(--bl); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .inp-grp input, .full-sel { flex: 1; padding: 12px 16px; font-size: 1.1rem; border: none; outline: none; width: 100%; color: var(--txt); min-height: 48px; background: #fff; }
+        .full-sel { width: 100%; padding: 12px 16px; border-radius: var(--rad); border: 1px solid var(--bord); font-size: 1rem; background: #fff; min-height: 48px; }
+
+        .adv-link { background: none; border: none; padding: 0; color: var(--bl); font-weight: 700; cursor: pointer; font-size: 1rem; margin: 1.5rem 0; display: inline-flex; align-items: center; }
+        .adv-link:hover { text-decoration: underline; }
+        .hid-sec { display: none; padding-top: 1rem; animation: slideDown 0.3s ease-out; }
+        .hid-sec.show { display: block; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Buttons */
+        .btn-act { width: 100%; background: var(--grad); color: #fff; border: none; padding: 16px; font-weight: 700; border-radius: var(--rad); cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s; min-height: 54px; margin-bottom: 1rem; }
+        .btn-act:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(37,99,235,0.2); }
+        .btn-sec { background: #fff; border: 2px dashed var(--bl); color: var(--bl); padding: 12px; border-radius: var(--rad); font-weight: 700; cursor: pointer; width: 100%; margin-top: 1rem; }
+        .btn-res { background: none; border: none; color: var(--mut); margin-top: 1rem; text-decoration: underline; cursor: pointer; }
+
+        /* Result Box */
+        .res-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--rad); padding: 2rem; margin-top: 2rem; text-align: center; display: none; }
+        .res-box.visible { display: block; animation: popIn 0.3s; }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .res-val { font-size: 3.5rem; font-weight: 900; line-height: 1; color: var(--bl); margin-bottom: 0.5rem; }
+        .res-lbl { font-size: 0.9rem; font-weight: 700; color: var(--mut); text-transform: uppercase; letter-spacing: 1px; }
+        
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 2rem; text-align: center; }
+        .stat-item { background: #fff; padding: 10px; border-radius: 8px; border: 1px solid var(--bord); }
+        .stat-v { display: block; font-weight: 800; font-size: 1.2rem; color: var(--txt); }
+        .stat-l { font-size: 0.8rem; color: var(--mut); text-transform: uppercase; }
+
+        .safe-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-top: 10px; }
+        .is-safe { background: #d1fae5; color: var(--grn); border: 1px solid #34d399; }
+        .is-risky { background: #fee2e2; color: var(--red); border: 1px solid #f87171; }
+
+        /* Strategy Table */
+        .sim-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid var(--bord); }
+        .sim-table th, .sim-table td { padding: 12px; border-bottom: 1px solid var(--bord); text-align: left; }
+        .sim-table th { background: #f8fafc; font-weight: 700; color: var(--mut); font-size: 0.8rem; text-transform: uppercase; }
+        .sim-table tr:last-child td { border-bottom: none; }
+
+        .sig { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--bord); font-size: 0.9rem; color: var(--mut); font-weight: 500; }
+
+        /* Content */
+        .content { margin-top: 4rem; padding-bottom: 2rem; }
+        .content h2 { font-size: 1.5rem; font-weight: 800; margin: 2.5rem 0 1rem; letter-spacing: -0.5px; }
+        .content h3 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.8rem; }
+        .content p { margin-bottom: 1.2rem; font-size: 1.05rem; }
+        .content ul, .content ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .content li { margin-bottom: 0.8rem; }
+        .content strong { color: var(--bl); font-weight: 700; }
+        .content .info-box { background: #f1f5f9; padding: 1.5rem; border-left: 4px solid var(--bl); border-radius: 4px; margin: 1.5rem 0; }
+
+        /* Overlays */
+        .ov-lay { position: fixed; inset: 0; background: rgba(15,23,42,0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.2s; }
+        .ov-lay.active { opacity: 1; visibility: visible; }
+        .drawer { position: fixed; inset: 0 auto 0 0; width: 300px; background: var(--surf); z-index: 101; padding: 2rem; transform: translateX(-100%); transition: 0.3s; }
+        .ov-lay.active .drawer { transform: translateX(0); }
+        .search-bar { position: fixed; inset: 0 0 auto 0; background: var(--surf); z-index: 101; padding: 1.5rem; transform: translateY(-100%); transition: 0.3s; border-bottom: 1px solid var(--bord); display: flex; gap: 1rem; }
+        .ov-lay.active .search-bar { transform: translateY(0); }
+        .cls-btn { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--mut); }
+        .nav-lnk a { display: block; padding: 12px 0; border-bottom: 1px solid var(--bord); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div id="menuOverlay" class="ov-lay" aria-hidden="true">
+        <div class="drawer">
+            <div style="display:flex; justify-content:space-between; margin-bottom:2rem;">
+                <span style="font-weight:800; font-size:1.4rem;">Menu</span>
+                <button id="closeMenu" class="cls-btn" aria-label="Close">&times;</button>
+            </div>
+            <nav class="nav-lnk">
+                <a href="/">Home</a>
+                <a href="/categories/education-academics">Education</a>
+                <a href="/categories/salary-finance">Finance</a>
+                <a href="/categories/construction-materials">Construction</a>
+                <a href="/categories/general-lifestyle">Lifestyle</a>
+                <a href="/contact">Contact</a>
+            </nav>
+        </div>
+    </div>
+
+    <div id="searchOverlay" class="ov-lay" aria-hidden="true">
+        <div class="search-bar">
+            <input type="text" id="globalSearchInput" class="full-sel" placeholder="Search tools..." autocomplete="off">
+            <button id="closeSearch" class="cls-btn" aria-label="Close">&times;</button>
+        </div>
+        <div id="searchResults" class="container"></div>
+    </div>
+
+    <header>
+        <div class="container head-in">
+            <div class="head-l">
+                <button id="menuBtn" class="icon-btn" aria-label="Menu"><div class="ico-burger"></div></button>
+                <a href="/" class="logo">
+                    <span class="l-pk">Love</span>
+                    <svg class="l-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="uG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#db2777"/><stop offset="100%" style="stop-color:#2563eb"/></linearGradient></defs>
+                        <path d="M 20 10 L 20 60 Q 20 90 50 90 Q 80 90 80 60 L 80 10" stroke="url(#uG)" stroke-width="28" stroke-linecap="round"/>
+                    </svg>
+                    <span class="l-bl">Calc.</span>
+                </a>
+            </div>
+            <button id="searchBtn" class="icon-btn" aria-label="Search"><svg class="ico-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="limiter">
+            <nav style="margin-bottom:1.5rem; color:var(--mut); font-size:0.9rem;">
+                <a href="/">Home</a> / <a href="/categories/education-academics">Education</a>
+            </nav>
+
+            <div style="margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -1px;">Negative Marking Calculator</h1>
+                <p style="color: var(--mut); font-size: 1.1rem;">Instantly calculate your exam score with penalties. Simulate guessing strategies for JEE, NEET, and UPSC.</p>
+            </div>
+
+            <div class="calc-card">
+                <form id="calcForm" onsubmit="event.preventDefault(); calculateScore();">
+                    <div class="grid-2">
+                        <div>
+                            <label for="totalQs">Total Questions</label>
+                            <input type="number" id="totalQs" class="full-sel" placeholder="e.g. 100" required aria-label="Total Questions">
+                        </div>
+                        <div>
+                            <label for="attempted">Attempted</label>
+                            <input type="number" id="attempted" class="full-sel" placeholder="e.g. 90" required aria-label="Questions Attempted">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div>
+                            <label for="correct">Correct Answers</label>
+                            <input type="number" id="correct" class="full-sel" placeholder="e.g. 75" required aria-label="Correct Answers">
+                        </div>
+                        <div>
+                            <label for="marksPerQ">Marks per Correct Q</label>
+                            <input type="number" id="marksPerQ" class="full-sel" value="4" required aria-label="Marks per Correct Question">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="penalty">Negative Marking (Penalty)</label>
+                        <div class="inp-grp">
+                            <input type="text" id="penalty" placeholder="e.g. 1/3 or 1" value="1/3" aria-label="Penalty Value">
+                            <select onchange="document.getElementById('penalty').value=this.value" style="flex:0.5;" aria-label="Penalty Presets">
+                                <option value="1/3">1/3 (UPSC/JEE)</option>
+                                <option value="1/4">1/4 (SSC/Bank)</option>
+                                <option value="1">1 Mark (NEET)</option>
+                                <option value="0.25">0.25</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="button" class="adv-link" id="advToggle" onclick="toggleStrategy()">Show Strategy & Simulation ▼</button>
+
+                    <div id="stratSection" class="hid-sec">
+                        <div class="info-box" style="margin-bottom:1.5rem;">
+                            <strong>Strategy Simulation:</strong> See what happens if you attempt MORE questions with lower accuracy.
+                        </div>
+                        <div class="grid-2">
+                            <div>
+                                <label for="targetAcc">Target Accuracy %</label>
+                                <input type="number" id="targetAcc" class="full-sel" placeholder="e.g. 85" oninput="runSimulation()" aria-label="Target Accuracy">
+                            </div>
+                            <div>
+                                <label for="cutoff">Cut-off Goal</label>
+                                <input type="number" id="cutoff" class="full-sel" placeholder="e.g. 120" oninput="runSimulation()" aria-label="Cutoff Score Goal">
+                            </div>
+                        </div>
+                        <div id="simResults"></div>
+                    </div>
+
+                    <button type="submit" class="btn-act">Calculate Score</button>
+                    
+                    <div style="text-align:center;">
+                        <button type="button" class="btn-res" onclick="resetTool()">Reset</button>
+                    </div>
+                    <button type="button" class="btn-sec" onclick="generatePDF()">Download Report PDF</button>
+                </form>
+
+                <div id="resultBox" class="res-box">
+                    <div class="res-lbl">Final Net Score</div>
+                    <div class="res-val" id="resNet">0.00</div>
+                    <div class="res-lbl">OUT OF <span id="resTotalMarks">0</span></div>
+
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="stat-v" id="resAcc">0%</span>
+                            <span class="stat-l">Accuracy</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-v" style="color:var(--grn)" id="resRaw">0</span>
+                            <span class="stat-l">Raw Marks</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-v" style="color:var(--red)" id="resNeg">0</span>
+                            <span class="stat-l">Penalty</span>
+                        </div>
+                    </div>
+
+                    <div id="breakEvenBadge" class="safe-badge"></div>
+                    <p style="font-size:0.9rem; color:var(--mut); margin-top:10px;">
+                        Break-Even Accuracy: <strong id="resBE">0%</strong><br>
+                        (You need > <span id="resBENum">0</span>% accuracy to profit from guessing)
+                    </p>
+                </div>
+
+                <div class="sig">Made with <span class="l-pk">Love</span> & <span class="l-bl">Logic</span>.</div>
+            </div>
+
+            <article class="content">
+                <h2>Understanding Negative Marking</h2>
+                <p>Competitive exams like JEE, NEET, UPSC, and Banking (IBPS/SBI) use negative marking to penalize random guessing. This system ensures that a student's score reflects genuine knowledge rather than luck. The <strong>LoveU Calc Negative Marking Calculator</strong> helps you understand the impact of every wrong answer on your final rank.</p>
+
+                <div class="info-box">
+                    <h3>The Score Formula</h3>
+                    <p>Your Final Score is calculated as:</p>
+                    <p><strong>Score = (Correct × Marks per Q) - (Wrong × Penalty)</strong></p>
+                    
+                    <p><em>Example:</em> If you get +4 for correct and -1 for wrong, getting 3 correct and 1 wrong gives you: $(3 \times 4) - (1 \times 1) = 11$ marks.</p>
+                </div>
+
+                <h2>The "Break-Even" Accuracy Concept</h2>
+                <p>Many students ask: <em>"Should I guess if I can eliminate two options?"</em> The answer lies in the <strong>Break-Even Accuracy</strong>.</p>
+                <p>This is the minimum accuracy percentage you need to maintain to gain marks from attempting questions. If your accuracy falls below this threshold, guessing actually hurts your score more than leaving the question blank.</p>
+                <ul>
+                    <li><strong>1/3 Negative Marking (e.g., +3, -1):</strong> You need <strong>25% accuracy</strong> to break even. If you can eliminate 1 option, your probability is 33%, making it statistically favorable to guess.</li>
+                    <li><strong>1/4 Negative Marking (e.g., +4, -1):</strong> You need only <strong>20% accuracy</strong>. Guessing is safer here.</li>
+                </ul>
+
+                <h2>Exam-Specific Marking Schemes</h2>
+                <p>Different exams have different risk profiles:</p>
+                
+                <h3>1. JEE Main & Advanced</h3>
+                <p>Typically <strong>+4 for correct, -1 for wrong</strong> (25% penalty). This is a moderately forgiving scheme. Intelligent guessing (eliminating 2 options) is highly recommended here.</p>
+
+                <h3>2. NEET (Medical)</h3>
+                <p>Also follows the <strong>+4, -1</strong> pattern. However, since the cutoff scores are extremely high, accuracy is more important than attempting risky questions.</p>
+
+                <h3>3. UPSC Civil Services (Prelims)</h3>
+                <p>Uses a stricter <strong>1/3rd penalty</strong> (0.66 marks deducted for a 2-mark question). Here, random guessing is dangerous. Only guess if you are 50% sure.</p>
+
+                <h2>Strategy: High Attempts vs. High Accuracy</h2>
+                <p>Use the "Strategy & Simulation" feature in our tool to test scenarios. Often, students aiming for 90% accuracy attempt too few questions to clear the cutoff. Conversely, attempting 100% of questions with 60% accuracy usually results in a lower score due to the penalty pile-up.</p>
+                <p><strong>The Golden Rule:</strong> Never leave a question blank if the penalty is 1/4 and you can eliminate at least one option.</p>
+
+                <h2>Frequently Asked Questions</h2>
+                <h3>What is 1/3 negative marking?</h3>
+                <p>It means 33.33% of the marks assigned to a question are deducted if you answer incorrectly. If a question is worth 2 marks, 0.66 marks are deducted for a wrong answer.</p>
+
+                <h3>Does leaving a question blank attract a penalty?</h3>
+                <p>No. Unattempted questions almost always result in 0 marks (no gain, no loss). It is better to skip than to guess blindly.</p>
+
+                <h3>How do I calculate my accuracy?</h3>
+                <p>Accuracy = (Total Correct Answers / Total Questions Attempted) × 100. A healthy accuracy for competitive exams is typically above 85%.</p>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container foot-lnk">
+            <a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a>
+            <p style="margin-top:1.5rem;">&copy; 2026 LoveU Calc. Use for reference.</p>
+        </div>
+    </footer>
+
+    <script src="/scripts.js" defer></script>
+    <script src="./tool.js" defer></script>
+
+</body>
+</html>
