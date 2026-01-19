@@ -243,7 +243,7 @@
                             <label for="length">Length</label>
                             <div class="inp-grp">
                                 <input type="number" id="length" placeholder="0" required inputmode="decimal">
-                                <select id="lengthUnit">
+                                <select id="lengthUnit" aria-label="Length Unit">
                                     <option value="ft">Feet</option>
                                     <option value="m">Meters</option>
                                     <option value="yd">Yards</option>
@@ -256,7 +256,7 @@
                             <label for="width">Width</label>
                             <div class="inp-grp">
                                 <input type="number" id="width" placeholder="0" required inputmode="decimal">
-                                <select id="widthUnit">
+                                <select id="widthUnit" aria-label="Width Unit">
                                     <option value="ft">Feet</option>
                                     <option value="m">Meters</option>
                                     <option value="yd">Yards</option>
@@ -272,7 +272,7 @@
                             <label for="depth">Thickness</label>
                             <div class="inp-grp">
                                 <input type="number" id="depth" placeholder="e.g. 3" required inputmode="decimal">
-                                <select id="depthUnit">
+                                <select id="depthUnit" aria-label="Thickness Unit">
                                     <option value="in">Inches</option>
                                     <option value="cm">CM</option>
                                     <option value="ft">Feet</option>
@@ -301,7 +301,7 @@
                                 <label for="baseDepth">Gravel Depth</label>
                                 <div class="inp-grp">
                                     <input type="number" id="baseDepth" placeholder="e.g. 6" inputmode="decimal">
-                                    <select id="baseDepthUnit">
+                                    <select id="baseDepthUnit" aria-label="Gravel Depth Unit">
                                         <option value="in">Inches</option>
                                         <option value="cm">CM</option>
                                         <option value="ft">Feet</option>
@@ -420,11 +420,7 @@
 
                 <h2>Asphalt Thickness Guide</h2>
                 <p>Choosing the right depth ensures longevity without overspending:</p>
-                
-
-[Image of asphalt pavement cross section]
-
-                <ul>
+                                <ul>
                     <li><strong>1.5 - 2 Inches (Resurfacing):</strong> Ideal for overlaying an existing driveway that is structurally sound but has surface wear.</li>
                     <li><strong>2.5 - 3 Inches (New Driveway):</strong> The standard for new residential driveways on a gravel base. Supports cars and light trucks.</li>
                     <li><strong>4 - 6 Inches (Heavy Duty):</strong> Required for commercial lots hosting dump trucks or RVs. Usually applied in two layers (Binder course + Surface course).</li>
