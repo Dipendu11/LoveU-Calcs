@@ -20,41 +20,132 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://loveucalc.com/#organization",
+          "name": "LoveU Calc",
+          "url": "https://loveucalc.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://loveucalc.com/assets/logo.png",
+            "width": 112,
+            "height": 112
+          },
+          "sameAs": [
+            "https://www.facebook.com/loveucalc",
+            "https://twitter.com/loveucalc"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://loveucalc.com/#website",
+          "url": "https://loveucalc.com/",
+          "name": "LoveU Calc",
+          "publisher": {
+            "@id": "https://loveucalc.com/#organization"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://loveucalc.com/long-division-calculator/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://loveucalc.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Education",
+              "item": "https://loveucalc.com/categories/education-academics"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Long Division Calculator",
+              "item": "https://loveucalc.com/long-division-calculator/"
+            }
+          ]
+        },
+        {
           "@type": "WebApplication",
+          "@id": "https://loveucalc.com/long-division-calculator/#webapp",
           "name": "Long Division Calculator",
           "url": "https://loveucalc.com/long-division-calculator/",
+          "description": "A comprehensive long division calculator that provides step-by-step solutions with visual work shown, supporting remainder and decimal modes.",
           "applicationCategory": "EducationalApplication",
           "operatingSystem": "All",
-          "description": "A comprehensive long division calculator that provides step-by-step solutions for division problems, supporting both remainder and decimal modes.",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          "browserRequirements": "Requires JavaScript",
+          "featureList": "Step-by-step solution, Remainder mode, Decimal mode, Dyscalculia support, PDF Worksheet generation",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "author": {
+            "@id": "https://loveucalc.com/#organization"
+          }
         },
         {
           "@type": "HowTo",
           "name": "How to Perform Long Division (DMSB Method)",
+          "description": "Follow these steps to solve any long division problem using the Dad, Mom, Sister, Brother mnemonic.",
           "step": [
-            { "@type": "HowToStep", "name": "Divide", "text": "Determine how many times the divisor fits into the first digit(s) of the dividend." },
-            { "@type": "HowToStep", "name": "Multiply", "text": "Multiply that count by the divisor and write the result under the dividend." },
-            { "@type": "HowToStep", "name": "Subtract", "text": "Subtract the product from the dividend digits to find the remainder." },
-            { "@type": "HowToStep", "name": "Bring Down", "text": "Bring down the next digit of the dividend and repeat the cycle." }
+            {
+              "@type": "HowToStep",
+              "name": "Divide",
+              "text": "Determine how many times the divisor fits into the first digit(s) of the dividend.",
+              "position": 1
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Multiply",
+              "text": "Multiply that count by the divisor and write the result under the dividend.",
+              "position": 2
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Subtract",
+              "text": "Subtract the product from the dividend digits to find the remainder.",
+              "position": 3
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Bring Down",
+              "text": "Bring down the next digit of the dividend and repeat the cycle.",
+              "position": 4
+            }
           ]
         },
         {
           "@type": "FAQPage",
-          "mainEntity": [{
-            "@type": "Question",
-            "name": "What is a remainder in division?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A remainder is the amount 'left over' after performing the division of two integers. For example, 7 divided by 2 is 3 with a remainder of 1."
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is a remainder in division?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A remainder is the amount 'left over' after performing the division of two integers. For example, 7 divided by 2 is 3 with a remainder of 1."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I divide by zero?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, division by zero is undefined in mathematics. This calculator will alert you if you attempt to use 0 as a divisor."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does the calculator show decimals instead of a remainder?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Check the 'Mode' toggle at the top of the calculator. If you have selected 'Decimal Mode', the tool will continue dividing past the decimal point. Switch to 'Remainder Mode' for whole number results."
+              }
             }
-          }, {
-            "@type": "Question",
-            "name": "Can I divide by zero?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No, division by zero is undefined in mathematics. This calculator will alert you if you attempt to use 0 as a divisor."
-            }
-          }]
+          ]
         }
       ]
     }
